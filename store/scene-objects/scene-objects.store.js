@@ -34,7 +34,7 @@ const sceneObjectsReducer = (state, action) => {
     case '[ Add Object ]': {
       const { object } = action;
       
-      console.log('{{{{{ STORE object', object)
+      // console.log('{{{{{ STORE object', object)
 
       if (!object) return { ...state };
       // object.id = object.id ? object.id : utils.uuid()

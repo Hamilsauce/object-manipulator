@@ -11,7 +11,8 @@ import { getSceneObjectsStore } from './store/index.js';
 import { updateSceneOrigin } from './store/scene-viewport/scene-viewport.actions.js';
 import { addObject, addSelectedObjects, setFocusedObject } from './store/scene-objects/scene-objects.actions.js';
 
-
+const newObject1 = new Object()
+const newObject2 = Object.create(null)
 
 const { template, utils, addDragAction } = ham;
 
@@ -24,7 +25,10 @@ const app = new Application();
 // console.warn('app', { app });
 
 app.initialize((app) => {
-  const canvasTemplates = app.canvas.scene.templates
+  const canvas = app.canvas
+  const scene = canvas.scene
+  const canvasTemplates = scene.templates
+  
   const domPoint = (element, x, y) => {
     return new DOMPoint(x, y).matrixTransform(
       element.getScreenCTM().inverse()
@@ -43,7 +47,7 @@ app.initialize((app) => {
     target.querySelector(`.overlay-slot`)
       .append(sel);
 
-    target.stopDrag = draggable(scene, target);
+    target.stopDrag = draggable(scene.dom, target);
 
 
   }
@@ -115,7 +119,7 @@ app.initialize((app) => {
   const appBody = document.querySelector('#app-body')
   const canvasEl = document.querySelector('#canvas');
   const hudLayer = document.querySelector('#hud');
-  const scene = document.querySelector('#scene');
+  const sceneEl = document.querySelector('#scene');
   const toolbox = document.querySelector('#toolbox');
   const tbSurface = document.querySelector('#toolbox-surface');
   const tbObjects = document.querySelector('#toolbox-objects');
@@ -150,7 +154,7 @@ app.initialize((app) => {
     // tap(x => console.warn('[[ SCREEN PAN$ ]]: ', { x })),
     tap(x => Object.assign(LocalVewportState.origin, x.origin)),
     tap((panState) => {
-      const viewBox = scene.viewBox.baseVal;
+      const viewBox = scene.dom.viewBox.baseVal;
 
       Object.assign(viewBox, { ...panState.viewBox });
 
@@ -176,9 +180,10 @@ app.initialize((app) => {
   ).subscribe();
 
   const canvasObjectsDrags = canvasObjects.map((obj, i) => {
-    return draggable(scene, obj)
+    return draggable(scene.dom, obj)
   });
 
+console.log('surfaceLayer', surfaceLayer)
   const pan$ = addPanAction(surfaceLayer);
 
 
@@ -187,18 +192,31 @@ app.initialize((app) => {
 
   tbObjects.addEventListener('pointerdown', e =>
   {
-    e.preventDefault();
-    e.stopPropagation();
+    // e.preventDefault();
+    // e.stopPropagation();
 
     const tbObject = e.target.closest('.toolbox-object');
 
     if (tbObject) {
       const shapeName = tbObject.dataset.objectType;
-      const pt = domPoint(scene, e.clientX, e.clientY);
+      const pt = domPoint(scene.dom, e.clientX, e.clientY);
+      console.log('shapeName', shapeName)
 
-
-
-      // const shapeObj = createSceneObject(scene,
+      scene.addObject(
+        shapeName,
+        //   {
+        //   // id: shapeName + '-' + utils.uuid(),
+        //   type: shapeName,
+        //   dimensions: {
+        //     r: 16,
+        //     width: 16,
+        //     height: 16,
+        //   },
+        //   attributes: {},
+        //   point: LocalVewportState.origin,
+        // }
+      )
+      // const shapeObj = createScene.domObject(scene.dom,
       // {
       //   type: shapeName,
       //   dimensions: {
@@ -210,20 +228,21 @@ app.initialize((app) => {
       //   point: { ...LocalVewportState.origin }
       // });
 
-      sceneObjectsStore.dispatch(
-        addObject({
-          object: {
-            id: shapeName + '-' + utils.uuid(),
-            type: shapeName,
-            dimensions: {
-              r: 16,
-              width: 16,
-              height: 16,
-            },
-            attributes: {},
-            point: LocalVewportState.origin,
-          }
-        }))
+      // scene.domObjectsStore.dispatch(
+      //   addObject({
+      //     object:
+      //     {
+      //       id: shapeName + '-' + utils.uuid(),
+      //       type: shapeName,
+      //       dimensions: {
+      //         r: 16,
+      //         width: 16,
+      //         height: 16,
+      //       },
+      //       attributes: {},
+      //       point: LocalVewportState.origin,
+      //     }
+      //   }))
 
       // shapeObj.select()
       // focusObject(shapeObj.dom)
@@ -231,8 +250,7 @@ app.initialize((app) => {
 
       // console.warn('[[ New Shape Object ]]: ', shapeObj);
     }
-  }
-  );
+  });
 
   toolbox.addEventListener('pointerdown', e => {
     const state = toolbox.dataset.expanded === 'true' ? true : false;
@@ -241,7 +259,7 @@ app.initialize((app) => {
 
 
   objectLayer.addEventListener('pointerdown', e => {
-    const point = domPoint(scene, e.clientX, e.clientY)
+    const point = domPoint(scene.dom, e.clientX, e.clientY)
     const targetObject = document.elementFromPoint(e.clientX, e.clientY)
       .closest('.object-container[data-selected="true"]')
 
