@@ -1,0 +1,331 @@
+/* 
+var(--accent-orange)
+*/
+
+:root {
+  --primary: #283038;
+  --accent-white: #F3F3F3;
+  --accent-white40: #FEF3F340;
+  --accent-white99: #FEF3F399;
+  --audionode-yellow1: #C5CF3B;
+  /* --accent-orange: #E1A12D; */
+  --accent-orange: #F9AD23;
+
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  z-index: 0;
+  touch-action: none;
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+input[type=checkbox] {
+  background: #E38D16;
+  filter: hue-rotate(191deg) brightness(1.08);
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent-white);
+}
+
+#app {
+  display: grid;
+  grid-template-rows: 41px 1fr 40px;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  /* justify-content: center; */
+  gap: 0px;
+  width: 100%;
+  height: 100%;
+  margin: aut0;
+  /* background: #A05537; */
+  color: var(--accent-white);
+  font-size: 18px;
+  overflow: hidden;
+}
+
+#canvas {
+  /* background: #A28875; */
+  border: 1px solid #E316AC;
+  touch-action: none;
+}
+
+.node-body {
+  rx: 0.1px;
+  /* stroke-width: 0.01px; */
+  /* stroke: #37393B; */
+}
+
+.app-button {}
+
+.app-button:active {
+  filter: brightness(0.8);
+}
+
+.button-icon {
+  fill: #EAEAEA;
+  color: var(--accent-white);
+}
+
+#app-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 0px;
+  padding: 4px 4px;
+  overflow: hidden;
+}
+
+.app-header-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  padding: 0px 8px 0px;
+}
+
+#app-header-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  width: 100%;
+  height: 100%;
+  color: var(--accent-white40);
+  letter-spacing: 16px;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 12px;
+  text-align: center;
+  padding: 2px 8px 16px 8px;
+  white-space: nowrap;
+}
+
+#app-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.app-header-row.bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  padding: 0;
+  /* height: 24px; */
+}
+
+#param-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#app-body {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  gap: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#surface-layer {
+  /* filter: blur(0.065px); */
+}
+
+.hud-text {
+  font-size: 0.4em;
+}
+
+#toolbox {
+  stroke: #FEFEFE;
+  stroke-width: 0.6px;
+  filter: drop-shadow(0 0.0rem 0.8px #3C3D41AB);
+  /* transition: 0.2s; */
+  overflow: hidden;
+}
+
+#toolbox-surface {
+  transition: width 0.25s, height 0.2s, rx 0.15s, ry 0.15s, transform 0.2s;
+}
+
+#toolbox[data-expanded=true] #toolbox-surface {
+  width: 12px;
+  height: 96px;
+  ry: 6px;
+  rx: 6px;
+  filter: drop-shadow(0 0.0rem 0.8px #3C3D41AB);
+  transform: translate(0, -44px);
+}
+
+#toolbox[data-expanded=false] #toolbox-objects,
+#toolbox[data-expanded=false] #toolbox-objects * {
+  transform: scale(0);
+  overflow: hidden;
+}
+
+
+
+.toolbox-object>.toolbox-object {
+  fill: #FEFEFE;
+  stroke: #000000;
+  stroke-width: 0.5px;
+  filter: drop-shadow(0 0.0rem 0.02rem #F1F1F1CF);
+  transition-delay: 0.15s;
+}
+
+.canvas-object {
+  fill: #FEFEFE;
+  stroke: #000000;
+  /* stroke: #F9AD23; */
+  /* stroke-width: 0.5px; */
+  filter: drop-shadow(0 0.003rem 0.005rem #37393D65);
+}
+
+.canvas-object * {
+  transition: 0.2s;
+
+}
+
+.selector-marker {
+  fill: transparent;
+  stroke: #F9AD23;
+  stroke-width: 0.05rem;
+  /* filter: drop-shadow(0 0.003rem 0.005rem #37393D87); */
+  /* filter: drop-shadow(0 0.0009rem 0.008rem #37393DE0); */
+  /* filter: drop-shadow(0 0.003rem 0.001rem #37393D65); */
+  /* background: #E1A12D; */
+}
+
+.object-container[data-selected=true][data-focused=false] .selector-marker {
+  fill: transparent;
+  stroke: #F9AD23;
+  stroke-width: 0.05rem;
+}
+
+.object-container[data-focused=true] .selector-marker {
+  fill: transparent;
+  stroke: #F01010;
+  stroke-width: 0.055rem;
+  filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
+  /* filter: drop-shadow(0 0.003rem 0.001rem #37393D65); */
+  /* background: #E1A12D; */
+}
+
+.object-container[data-focused=true] .object-slot>* {
+  filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
+}
+
+.content-container {
+  display: grid;
+  grid-template-rows: 20px 1fr;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  color: #666666;
+  border: 1px solid #2C2C2C;
+  border-radius: 4px;
+}
+
+.content-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  /* background: #EAEAEA; */
+  color: #504E4E;
+  font-size: 12px;
+}
+
+.content-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  font-weight: 800;
+  backdrop-filter: brightness(0.9);
+  /* filter: brightness(0.8); */
+}
+
+.content-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  padding: 2px 8px;
+  font-weight: 500;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.content-field:last-of-type {
+  border-bottom: 1px solid transparent;
+}
+
+.field-name {
+  font-weight: 600;
+}
+
+.coord-text {
+  font-weight: 700;
+  fill: #2C2C2C;
+  /* stroke: #2C2C2C; */
+  stroke-width: 0.0;
+  ;
+}
+
+[data-object-type=point] {
+  fill: red;
+  stroke: #000000;
+  stroke-width: 0.01rem;
+  r: 1.5px;
+  filter: drop-shadow(0 0.063rem 0.0023rem #5355598F);
+
+}
