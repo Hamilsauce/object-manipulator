@@ -14,18 +14,45 @@
 </head>
 
 <body>
-  <app-component>
-    <!-- <section id="app-body">
-    
-      CANVAS
-    
-      <svg id="canvas" width="412" height="781" viewBox="0 0 412 781" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      
-        SCENE VIEWPORT
-      
-        <g id="scene-container" transform="translate(0,0)">
-          <svg id="scene" data-app-component="scene" width="412" height="781" viewBox="-36 -64 72 128" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs _id="scene-templates">
+  <div data-component-placeholder="app"></div>
+
+
+  <!-- <script src="./lib/objects/Application.js" type="module"></script> -->
+  <!-- <script src="./lib/objects/canvas/Canvas.js" type="module"></script> -->
+
+  <script type="text/javascript" charset="utf-8">
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+  </script>
+
+  <script src="./main.js" type="module"></script>
+
+
+
+  <template data-template="app" id="app-template">
+    <div id="app">
+      <div id="app-body">
+        <div data-component-placeholder="canvas"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="canvas-content-template">
+    <div class="content-container"></div>
+  </template>
+
+
+  <!-- <template id="hud-template">
+    <div class="content-container"></div>
+  </template> -->
+
+  <template data-template="canvas" id="canvas-template">
+    <svg data-component="canvas" id="canvas" width="412" height="781" viewBox="0 0 0 0" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+
+        <g id="templates">
+
+          <svg data-template="scene" width="412" height="781" viewBox="-36 -64 72 128" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs>
               <pattern id="smallGrid" style="z-index: 0" width="2" height="2" patternUnits="userSpaceOnUse">
                 <path id="smallGridPath" style="z-index: 0" d="M 2 0 H 0 V 2" fill="none" stroke="#C9C9C985" stroke-width="0.1" />
               </pattern>
@@ -39,36 +66,28 @@
               <marker id="triangleend" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
                 <path d="M 0 0 L 10 5 L 0 10 z" />
               </marker>
-      
-              TEMPLATES
-      
-              <g id="scene-templates">
-      
-                <g class="object-container"  id="" data-selected="false" data-focused="false" transform="translate(0,0) scale(1)">
-                  <rect class="bounding-box object-bounds" width="16" height="16" transform="translate(-8,-8) scale(1)" fill="transparent" stroke="none" />
-                  <g class="overlay-slot" transform="translate(0,0) scale(1)"></g>
+
+              <!-- TEMPLATES -->
+
+              <g id="templates">
+
+                <circle data-template="vertex" class="vertex" transform="translate(0,0)" cx="0" cy="0" r="1.25" fill="red" stroke="#000000" stroke-width="0.05rem" />
+
+                <g data-template="object-container" class="object-container" id="" data-selected="false" data-focused="false" transform="translate(0,0) scale(1)">
+                  <rect class="bounding-box object-bounding-box" width="16" height="16" transform="translate(-8,-8) scale(1)" fill="transparent" stroke="none" />
                   <g class="object-slot" transform="translate(0,0) scale(1)"></g>
+                  <g class="overlay-slot" transform="translate(0,0) scale(1)"></g>
                 </g>
-      
-                <rect class="canvas-object" data-object-type="rect"  transform="translate(0,0)" width="16" height="16" fill="orange" />
-      
-                <circle class="canvas-object" data-object-type="circle"  transform="translate(0,0)" r="8" />
-      
-                <circle class="canvas-object" data-object-type="point"  transform="translate(0,0)" r="0.2" />
-      
-                <path class="canvas-object" data-object-type="triangle"  transform="translate(0,0)" d=" M 0,16 8,0 16,16 Z" />
-      
-                <line class="canvas-object" data-object-type="line"  transform="translate(0,0) scale(1)" x1="0" x2=16 y1="0" y2="16" stroke="#00000025" _stroke-width="0.35"></line>
-      
+
                 <g data-template="object-selector" class="object-selector" transform="translate(0,0)">
                   <g class="selector-markers" transform="translate(0,0) scale(1)">
-                    <polyline class="selector-marker" points="-10,-5 -10,-10 -5,-10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                    <polyline class="selector-marker" points="10,5 10,10 5,10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                    <polyline class="selector-marker" points="5,-10 10,-10 10,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                    <polyline class="selector-marker" points="-10,5 -10,10 -5,10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
+                    <polyline class="selector-marker" points="-11,-5 -11,-11 -5,-11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
+                    <polyline class="selector-marker" points="11,5 11,11 5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
+                    <polyline class="selector-marker" points="5,-11 11,-11 11,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
+                    <polyline class="selector-marker" points="-11,5 -11,11 -5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
                   </g>
-      
-                  <g class="app-button" _transform-origin="center center" transform="translate(11,-10) rotate(0) scale(0.2)">
+
+                  <g class="app-button" transform="translate(12,-11) rotate(0) scale(0.2)">
                     <rect class="bounding-box" width="24" height="24" rx="4" transform="translate(-0.5,-0.5)" fill="orange" stroke="#000000" stroke-width="0.08rem" />
                     <g transform="translate(18,3) rotate(45) scale(1)">
                       <path fill="#FFFFFF" id="eraser" d=" M 0,0 4,0 4,2 0,2 Z" />
@@ -77,44 +96,51 @@
                     </g>
                   </g>
                 </g>
-      
-                <g class="canvas-object" data-object-type="content" transform="translate(0,0) scale(1)">
+
+
+                <g class="canvas-object" data-template="content" transform="translate(0,0) scale(1)">
                   <foreignObject class="content-object"></foreignObject>
                 </g>
               </g>
-      
+
             </defs>
-      
-      
+
+
             <g id="surface-layer" data-layer="surface" class="layer" transform="translate(-0,-0)">
               <rect transform="translate(0,-0)" id="surface" x="-1024" y="-1024" width="2048" height="2048" fill="url(#largeGrid)" />
-      
+
               <g id="axes" transform="translate(0,0)">
                 <line id="xaxis" class="axis" x1="-1000" x2="1000" y1="0" y2="0" stroke="#00000025" stroke-width="0.35"></line>
                 <line id="yaxis" class="axis" x1="0" x2="0" y1="-1000" y2="1000" stroke="#00000025" stroke-width="0.35"></line>
               </g>
             </g>
-      
-      
+
+
             <g id="object-layer" class="layer" data-layer="objects" transform="translate(-0,-0)">
-      
-      
-              <g id="test-object1" class="object-container"  id="" transform="translate(0,0) scale(1)">
-                <rect class="bounding-box" width="16" height="16" transform="translate(-8,-8) scale(1)" fill="transparent" stroke="none" />
+
+
+              <!--  TEST OBJECT IN SCENE  -->
+
+              <g id="test-object1" class="object-container" data-focused="true" data-selected="true" data-object-type="triangle" id="" transform="translate(20,20) rotate(0,0,0) scale(16)">
+                <rect class="bounding-box" width="1" height="1" transform="translate(-0.5,-0.5) scale(1)" fill="transparent" stroke="none" />
                 <g class="object-slot" transform="translate(0,0) scale(1)">
-                  <path class="canvas-object" data-object-type="triangle"  transform="translate(-8,-8)" d=" M 0,16 8,0 16,16 Z" />
+                  <path class="_canvas-object" data-object-type="triangle" fill="#FFFFFF" stroke="#000000" stroke-width="0.05" transform="translate(0,0)" d=" M 0,-0.5 0.5,0.5 -0.5,0.5 Z" />
+
+                  <circle class="_vertex" transform="translate(0,-0.5)" cx="0" cy="0" r="0.125" fill="red" stroke="#000000" stroke-width="0.05" />
+                  <circle class="_vertex" transform="translate(0.5,0.5)" cx="0" cy="0" r="0.125" fill="red" stroke="#000000" stroke-width="0.05" />
+                  <circle class="_vertex" transform="translate(-0.5,0.5)" cx="0" cy="0" r="0.125" fill="red" stroke="#000000" stroke-width="0.05" />
                 </g>
-              
+
                 <g class="overlay-slot" transform="translate(0,0) scale(1)">
-                  <g data-template="object-selector" class="object-selector" transform="translate(0,0)">
-                    <g class="selector-markers" transform="translate(0,0) scale(1)">
-                      <polyline class="selector-marker" points="-10,-5 -10,-10 -5,-10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                      <polyline class="selector-marker" points="10,5 10,10 5,10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                      <polyline class="selector-marker" points="5,-10 10,-10 10,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                      <polyline class="selector-marker" points="-10,5 -10,10 -5,10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                    </g>""
-              
-                    <g class="app-button" _transform-origin="center center" transform="translate(11,-10) rotate(0) scale(0.2)">
+                  <g data-template="object-selector" class="_object-selector" transform="translate(0,0)">
+                    <g class="_selector-markers" transform="translate(0,0) scale(1)">
+                      <polyline class="_selector-marker" points="-0.8,-0.5 -0.8,-0.8 -0.5,-0.8" fill="transparent" stroke="orange" stroke-width="0.05" style="filter: drop-shadow(0 0.063rem 0.0025rem #1BD353);" />
+                      <polyline class="selector-marker" points="11,5 11,11 5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
+                      <polyline class="selector-marker" points="5,-11 11,-11 11,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
+                      <polyline class="selector-marker" points="-11,5 -11,11 -5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
+                    </g>
+
+                    <g class="app-button" _transform-origin="center center" transform="translate(12,-11) rotate(0) scale(0.2)">
                       <rect class="bounding-box" width="24" height="24" rx="4" transform="translate(-0.5,-0.5)" fill="orange" stroke="#000000" stroke-width="0.08rem" />
                       <g transform="translate(18,3) rotate(45) scale(1)">
                         <path fill="#FFFFFF" id="eraser" d=" M 0,0 4,0 4,2 0,2 Z" />
@@ -125,346 +151,118 @@
                   </g>
                 </g>
               </g>
-      
             </g>
-      
-            <circle id="origin" transform="translate(0,0)" r="1.5" fill="#C2C2C230" stroke="#00000050" stroke-width="0.025rem" />
-      
-            <circle class="canvas-object" data-object-type="point"  transform="translate(20,-20)" r="0.2" />
-      
+
+            <circle class="canvas-object" data-object-type="point" transform="translate(20,-20)" r="0.2" />
+
+            <g id="origin" transform="translate(0,0) scale(0.16)" _style="font-size:0.8rem;f_pont-weight:600;">
+              <circle id="origin-marker" transform="translate(0,0)" r="8" fill="#C2C2C230" stroke="#00000050" stroke-width="0.1rem" />
+              <text class="coord-text" id="origin-coords" x="" y="20" text-anchor="middle">0, 0</text>
+            </g>
           </svg>
-        </g>
-      
-      
-        HUD
-      
-        <g id="hud" data-app-component="hud">
-      
-          <g id="detail-panel" class="canvas-object" data-object-type="content" transform="translate(312,4) scale(1)">
-            <g id="origin-coords" class="hud-widget" transform="translate(0,0)" data-expanded="false">
-              <rect id="coords-surface" transform="translate(0,0)" ry="4" rx="4" x="0" y="0" width="96" height="24" _fill="#FFFFFF99" _stroke="#00000080" />
-      
-              <g id="origin-coords-content" transform="translate(28,16)" data-expanded="false" style="font-size:0.8rem;f_pont-weight:600;">
-                <text class="coord-text" id="origin-coord-x" text-anchor="middle">x: </text>
-                <text class="coord-text" id="origin-coord-y" x="40" text-anchor="middle">y: </text>
-              </g>
-            </g>
-      
-            <g id="object-detail" class="hud-component" transform="translate(0,28)">
-              <foreignObject width="96" height="188" class="content-object">
-                <div class="content-container">
-                  <section class="content-row content-top">
-                    <div id="object-name" class="content-title">Triangle 1</div>
-                  </section>
-                  <section class="content-row content-upper-middle">
-                    <div class="content-field">
-                      <div class="field-name">Selected: </div>
-                      <div id="selected-value" class="field-value">false</div>
-                    </div>
-      
-                    <div class="content-field">
-                      <div class="field-name">Focused: </div>
-                      <div id="focused-value" class="field-value">false</div>
-                    </div>
-                  </section>
-      
-                  <section class="content-row content-middle">
-                    <div class="content-field">
-                      <div class="field-name">X: </div>
-                      <div id="x-coord-value" class="field-value">-34</div>
-                    </div>
-                    <div class="content-field">
-                      <div class="field-name">Y: </div>
-                      <div id="y-coord-value" class="field-value">-120</div>
-                    </div>
-                    <div class="content-field">
-                      <div class="field-name">W: </div>
-                      <div id="width-value" class="field-value">16</div>
-                    </div>
-                    <div class="content-field">
-                      <div class="field-name">H: </div>
-                      <div id="height-value" class="field-value">16</div>
-                    </div>
-                    <div class="content-field">
-                      <div class="field-name">Vertices</div>
-                      <div id="vertices-value" class="field-value">3</div>
-                    </div>
-                  </section>
-                </div>
-              </foreignObject>
-            </g>
-          </g>
-      
-          <g id="toolbox" class="hud-widget" transform="translate(12, 348) scale(4.5)" _transform="translate(-34,-4)" data-expanded="false">
-            <rect id="toolbox-surface" transform="translate(0,0)" ry="50%" rx="50%" x="0" y="0" width="8" height="8" fill="orange" />
-      
-            <g id="toolbox-objects" class="hud-widget" transform="translate(2,0)">
-      
-              <g class="toolbox-object" data-object-type="rect" transform="translate(0,-32) scale(1)">
-                <rect class="bounding-box" width="8" height="8" fill="transparent" stroke="none" />
-                <rect class="toolbox-object" data-object-type="rect" _transform="translate(0,-32)" width="8" height="8" fill="orange" />
-              </g>
-      
-              <g class="toolbox-object" data-object-type="circle" transform="translate(4,-16) scale(1)">
-                <rect class="bounding-box" width="8" height="8" transform="translate(-4,-4)" fill="transparent" stroke="none" />
-      
-                <circle class="toolbox-object" data-object-type="circle" _transform="translate(4,-16)" r="4" />
-      
-                <g class="toolbox-object" data-object-type="triangle" transform="translate(-4,8) scale(1)">
-                  <rect class="bounding-box" width="8" height="8" fill="transparent" stroke="none" />
-                  <path class="toolbox-object" data-object-type="triangle" _transform="translate(0,4)" d=" M 4,0 8,8 0,8 Z" />
+
+          <!-- HUD TEMPLATE -->
+
+          <g data-template="hud" class="canvas-component">
+
+            <g id="detail-panel" class="canvas-object" data-object-type="content" transform="translate(312,4) scale(1)">
+             
+              <!-- <g id="origin-coords" class="hud-widget" transform="translate(0,0)" data-expanded="false">
+                <rect id="coords-surface" transform="translate(0,0)" ry="4" rx="4" x="0" y="0" width="96" height="24" _fill="#FFFFFF99" _stroke="#00000080" />
+              
+                <g id="origin-coords-content" transform="translate(28,16)" data-expanded="false" style="font-size:0.8rem;f_pont-weight:600;">
+                  <text class="coord-text" id="origin-coord-x" text-anchor="middle">x: </text>
+                  <text class="coord-text" id="origin-coord-y" x="40" text-anchor="middle">y: </text>
                 </g>
-      
-                <g class="toolbox-object" data-object-type="line" transform="translate(-4,20) scale(1)">
+              </g> -->
+
+              <g id="object-detail" class="hud-component" transform="translate(0,0)">
+                <foreignObject width="96" height="188" class="content-object">
+                  <div class="content-container">
+                    <section class="content-row content-top">
+                      <div id="object-name" class="content-title">Triangle 1</div>
+                    </section>
+                    <section class="content-row content-upper-middle">
+                      <div class="content-field">
+                        <div class="field-name">Selected: </div>
+                        <div id="selected-value" class="field-value">false</div>
+                      </div>
+
+                      <div class="content-field">
+                        <div class="field-name">Focused: </div>
+                        <div id="focused-value" class="field-value">false</div>
+                      </div>
+                    </section>
+
+                    <section class="content-row content-middle">
+                      <div class="content-field">
+                        <div class="field-name">X: </div>
+                        <div id="x-coord-value" class="field-value">-34</div>
+                      </div>
+                      <div class="content-field">
+                        <div class="field-name">Y: </div>
+                        <div id="y-coord-value" class="field-value">-120</div>
+                      </div>
+                      <div class="content-field">
+                        <div class="field-name">W: </div>
+                        <div id="width-value" class="field-value">16</div>
+                      </div>
+                      <div class="content-field">
+                        <div class="field-name">H: </div>
+                        <div id="height-value" class="field-value">16</div>
+                      </div>
+                      <div class="content-field">
+                        <div class="field-name">Vertices</div>
+                        <div id="vertices-value" class="field-value">3</div>
+                      </div>
+                    </section>
+                  </div>
+                </foreignObject>
+              </g>
+            </g>
+
+            <g id="toolbox" class="hud-widget" transform="translate(12, 348) scale(4.5)" _transform="translate(-34,-4)" data-expanded="false">
+              <rect id="toolbox-surface" transform="translate(0,0)" ry="50%" rx="50%" x="0" y="0" width="8" height="8" fill="orange" />
+
+              <g id="toolbox-objects" class="hud-widget" transform="translate(2,0)">
+
+                <g class="toolbox-object" data-object-type="rect" transform="translate(0,-32) scale(1)">
                   <rect class="bounding-box" width="8" height="8" fill="transparent" stroke="none" />
-                  <line class="toolbox-object" data-object-type="line" _transform="translate(0,-8) scale(1)" x1="0" x2=8 y1="0" y2="8" stroke="#00000025" _stroke-width="0.35"></line>
+                  <rect class="toolbox-object" data-object-type="rect" _transform="translate(0,-32)" width="8" height="8" fill="orange" />
+                </g>
+
+                <g class="toolbox-object" data-object-type="circle" transform="translate(4,-16) scale(1)">
+                  <rect class="bounding-box" width="8" height="8" transform="translate(-4,-4)" fill="transparent" stroke="none" />
+
+                  <circle class="toolbox-object" data-object-type="circle" _transform="translate(4,-16)" r="4" />
+
+                  <g class="toolbox-object" data-object-type="triangle" transform="translate(-4,8) scale(1)">
+                    <rect class="bounding-box" width="8" height="8" fill="transparent" stroke="none" />
+                    <path class="toolbox-object" data-object-type="triangle" _transform="translate(0,4)" d=" M 4,0 8,8 0,8 Z" />
+                  </g>
+
+                  <g class="toolbox-object" data-object-type="line" transform="translate(-4,20) scale(1)">
+                    <rect class="bounding-box" width="8" height="8" fill="transparent" stroke="none" />
+                    <line class="toolbox-object" data-object-type="line" _transform="translate(0,-8) scale(1)" x1="0" x2=8 y1="0" y2="8" stroke="#00000025" _stroke-width="0.35"></line>
+                  </g>
                 </g>
               </g>
             </g>
-          </g>
-      
-      
-      
-          <g id="origin-coords" class="hud-widget" transform="translate(296,4)" data-expanded="false">
-            <rect id="coords-surface" transform="translate(0,0)" ry="4" rx="4" x="0" y="0" width="112" height="24" fill="#FFFFFF99" stroke="#00000080" />
-          
-            <g id="origin-coords-content" transform="translate(8,16)" data-expanded="false" style="font-size:0.8rem;font-weight:600;">
-              <text id="origin-coord-x" _text-anchor="middle">x: </text>
-              <text id="origin-coord-y" _text-anchor="middle" x="56">y: </text>
-            </g>
-          
+
           </g>
         </g>
-      </svg>
-    
-    </section> -->
-  </app-component>
-
-  <script src="./lib/objects/Application.js" type="module"></script>
-  <!-- <script src="./lib/objects/canvas/Canvas.js" type="module"></script> -->
-  <script src="./main.js" type="module"></script>
-
-  <template id="app-template">
-    <div id="app-body"></div>
-  </template>
-
-  <template id="canvas-content-template">
-    <div class="content-container"></div>
-  </template>
-
-
-  <template id="scene-template">
-    <svg id="scene" data-component="scene" width="412" height="781" viewBox="-36 -64 72 128" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <defs _id="scene-templates">
-        <pattern id="smallGrid" style="z-index: 0" width="2" height="2" patternUnits="userSpaceOnUse">
-          <path id="smallGridPath" style="z-index: 0" d="M 2 0 H 0 V 2" fill="none" stroke="#C9C9C985" stroke-width="0.1" />
-        </pattern>
-        <pattern id="largeGrid" style="z-index: 0" width="8" height="8" patternUnits="userSpaceOnUse">
-          <rect id="largeGridRect" style="z-index: 0" width="8" height="8" fill="url(#smallGrid)" />
-          <path id="largeGridPath" style="z-index: 0" d="M 8 0 H 0 V 8" fill="none" stroke="#C9C9C9" stroke-width="0.1" />
-        </pattern>
-        <marker id="trianglestart" style="z-index: 0" viewBox="0 0 1 1" refX="0" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-          <path d="M 10 0 L 0 5 L 10 10 z" />
-        </marker>
-        <marker id="triangleend" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
-          <path d="M 0 0 L 10 5 L 0 10 z" />
-        </marker>
-
-        <!-- TEMPLATES -->
-
-        <g id="scene-templates">
-
-          <g class="object-container"  id="" data-selected="false" data-focused="false" transform="translate(0,0) scale(1)">
-            <rect class="bounding-box object-bounds" width="16" height="16" transform="translate(-8,-8) scale(1)" fill="transparent" stroke="none" />
-            <g class="overlay-slot" transform="translate(0,0) scale(1)"></g>
-            <g class="object-slot" transform="translate(0,0) scale(1)"></g>
-          </g>
-
-          <rect class="canvas-object" data-object-type="rect"  transform="translate(-8,-8)" width="16" height="16" fill="orange" />
-
-          <circle class="canvas-object" data-object-type="circle"  transform="translate(0,0)" r="8" />
-
-          <circle class="canvas-object" data-object-type="point"  transform="translate(0,0)" r="0.2" />
-
-          <path class="canvas-object" data-object-type="triangle"  transform="translate(-8,-8)" d=" M 0,16 8,0 16,16 Z" />
-
-          <line class="canvas-object" data-object-type="line"  transform="translate(-8,-8) scale(1)" x1="0" x2=16 y1="0" y2="16" stroke="#00000025" _stroke-width="0.35"></line>
-
-          <g data-template="object-selector" class="object-selector" transform="translate(0,0)">
-            <g class="selector-markers" transform="translate(0,0) scale(1)">
-              <polyline class="selector-marker" points="-10,-5 -10,-10 -5,-10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-              <polyline class="selector-marker" points="10,5 10,10 5,10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-              <polyline class="selector-marker" points="5,-10 10,-10 10,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-              <polyline class="selector-marker" points="-10,5 -10,10 -5,10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-            </g>
-
-            <g class="app-button" _transform-origin="center center" transform="translate(11,-10) rotate(0) scale(0.2)">
-              <rect class="bounding-box" width="24" height="24" rx="4" transform="translate(-0.5,-0.5)" fill="orange" stroke="#000000" stroke-width="0.08rem" />
-              <g transform="translate(18,3) rotate(45) scale(1)">
-                <path fill="#FFFFFF" id="eraser" d=" M 0,0 4,0 4,2 0,2 Z" />
-                <path fill="#FFFFFF" id="body" d=" M 0,2.75 4,2.75 4,18 0,18 Z" />
-                <path fill="#FFFFFF" id="tip" d=" M 0,18.75 4,18.75 2,22 0,18.75 Z" />
-              </g>
-            </g>
-          </g>
-
-          <g class="canvas-object" data-object-type="content" transform="translate(0,0) scale(1)">
-            <foreignObject class="content-object"></foreignObject>
-          </g>
-        </g>
-
       </defs>
-
-
-      <g id="surface-layer" data-layer="surface" class="layer" transform="translate(-0,-0)">
-        <rect transform="translate(-0,-0)" id="surface" x="-1024" y="-1024" width="2048" height="2048" fill="url(#largeGrid)" />
-
-        <g id="axes" transform="translate(0,0)">
-          <line id="xaxis" class="axis" x1="-1000" x2="1000" y1="0" y2="0" stroke="#00000025" stroke-width="0.35"></line>
-          <line id="yaxis" class="axis" x1="0" x2="0" y1="-1000" y2="1000" stroke="#00000025" stroke-width="0.35"></line>
-        </g>
-      </g>
-
-
-      <g id="object-layer" class="layer" data-layer="objects" transform="translate(-0,-0)">
-
-
-        <!--  TEST OBJECT IN SCENE  -->
-       
-        <!-- <g id="test-object1" class="object-container"  data-object-type="triangle" id="" transform="translate(0,0) scale(1)">
-          <rect class="bounding-box" width="16" height="16" transform="translate(-8,-8) scale(1)" fill="transparent" stroke="none" />
-          <g class="object-slot" transform="translate(0,0) scale(1)">
-            <path class="canvas-object" data-object-type="triangle"  transform="translate(-8,-8)" d=" M 0,16 8,0 16,16 Z" />
-          </g>
-        
-          <g class="overlay-slot" transform="translate(0,0) scale(1)">
-            <g data-template="object-selector" class="object-selector" transform="translate(0,0)">
-              <g class="selector-markers" transform="translate(0,0) scale(1)">
-                <polyline class="selector-marker" points="-10,-5 -10,-10 -5,-10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                <polyline class="selector-marker" points="10,5 10,10 5,10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                <polyline class="selector-marker" points="5,-10 10,-10 10,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-                <polyline class="selector-marker" points="-10,5 -10,10 -5,10" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;" />
-              </g>
-        
-              <g class="app-button" _transform-origin="center center" transform="translate(11,-10) rotate(0) scale(0.2)">
-                <rect class="bounding-box" width="24" height="24" rx="4" transform="translate(-0.5,-0.5)" fill="orange" stroke="#000000" stroke-width="0.08rem" />
-                <g transform="translate(18,3) rotate(45) scale(1)">
-                  <path fill="#FFFFFF" id="eraser" d=" M 0,0 4,0 4,2 0,2 Z" />
-                  <path fill="#FFFFFF" id="body" d=" M 0,2.75 4,2.75 4,18 0,18 Z" />
-                  <path fill="#FFFFFF" id="tip" d=" M 0,18.75 4,18.75 2,22 0,18.75 Z" />
-                </g>
-              </g>
-            </g>
-          </g>
-        </g> -->
-
-      <circle class="canvas-object" data-object-type="point"  transform="translate(20,-20)" r="0.2" />
-      </g>
-
-      <circle id="origin" transform="translate(0,0)" r="1.5" fill="#C2C2C230" stroke="#00000050" stroke-width="0.025rem" />
-    </svg>
-  </template>
-
-  <template id="hud-template">
-    <div class="content-container"></div>
-  </template>
-
-  <template id="canvas-template">
-    <svg id="canvas" width="412" height="781" viewBox="0 0 412 781" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
       <!-- SCENE VIEWPORT -->
 
-      <g id="scene-container" data-component-container="scene" transform="translate(0,0)"></g>
+      <g id="scene-container" data-component-container="scene" transform="translate(0,0)">
+        <svg data-component-placeholder="scene"></svg>
+      </g>
 
       <!-- HUD -->
 
       <g id="hud-container" data-component-container="hud" transform="translate(0,0)">
-        <g id="hud" class="canvas-component">
-
-          <g id="detail-panel" class="canvas-object" data-object-type="content" transform="translate(312,4) scale(1)">
-            <g id="origin-coords" class="hud-widget" transform="translate(0,0)" data-expanded="false">
-              <rect id="coords-surface" transform="translate(0,0)" ry="4" rx="4" x="0" y="0" width="96" height="24" _fill="#FFFFFF99" _stroke="#00000080" />
-
-              <g id="origin-coords-content" transform="translate(28,16)" data-expanded="false" style="font-size:0.8rem;f_pont-weight:600;">
-                <text class="coord-text" id="origin-coord-x" text-anchor="middle">x: </text>
-                <text class="coord-text" id="origin-coord-y" x="40" text-anchor="middle">y: </text>
-              </g>
-            </g>
-
-            <g id="object-detail" class="hud-component" transform="translate(0,28)">
-              <foreignObject width="96" height="188" class="content-object">
-                <div class="content-container">
-                  <section class="content-row content-top">
-                    <div id="object-name" class="content-title">Triangle 1</div>
-                  </section>
-                  <section class="content-row content-upper-middle">
-                    <div class="content-field">
-                      <div class="field-name">Selected: </div>
-                      <div id="selected-value" class="field-value">false</div>
-                    </div>
-
-                    <div class="content-field">
-                      <div class="field-name">Focused: </div>
-                      <div id="focused-value" class="field-value">false</div>
-                    </div>
-                  </section>
-
-                  <section class="content-row content-middle">
-                    <div class="content-field">
-                      <div class="field-name">X: </div>
-                      <div id="x-coord-value" class="field-value">-34</div>
-                    </div>
-                    <div class="content-field">
-                      <div class="field-name">Y: </div>
-                      <div id="y-coord-value" class="field-value">-120</div>
-                    </div>
-                    <div class="content-field">
-                      <div class="field-name">W: </div>
-                      <div id="width-value" class="field-value">16</div>
-                    </div>
-                    <div class="content-field">
-                      <div class="field-name">H: </div>
-                      <div id="height-value" class="field-value">16</div>
-                    </div>
-                    <div class="content-field">
-                      <div class="field-name">Vertices</div>
-                      <div id="vertices-value" class="field-value">3</div>
-                    </div>
-                  </section>
-                </div>
-              </foreignObject>
-            </g>
-          </g>
-
-          <g id="toolbox" class="hud-widget" transform="translate(12, 348) scale(4.5)" _transform="translate(-34,-4)" data-expanded="false">
-            <rect id="toolbox-surface" transform="translate(0,0)" ry="50%" rx="50%" x="0" y="0" width="8" height="8" fill="orange" />
-
-            <g id="toolbox-objects" class="hud-widget" transform="translate(2,0)">
-
-              <g class="toolbox-object" data-object-type="rect" transform="translate(0,-32) scale(1)">
-                <rect class="bounding-box" width="8" height="8" fill="transparent" stroke="none" />
-                <rect class="toolbox-object" data-object-type="rect" _transform="translate(0,-32)" width="8" height="8" fill="orange" />
-              </g>
-
-              <g class="toolbox-object" data-object-type="circle" transform="translate(4,-16) scale(1)">
-                <rect class="bounding-box" width="8" height="8" transform="translate(-4,-4)" fill="transparent" stroke="none" />
-
-                <circle class="toolbox-object" data-object-type="circle" _transform="translate(4,-16)" r="4" />
-
-                <g class="toolbox-object" data-object-type="triangle" transform="translate(-4,8) scale(1)">
-                  <rect class="bounding-box" width="8" height="8" fill="transparent" stroke="none" />
-                  <path class="toolbox-object" data-object-type="triangle" _transform="translate(0,4)" d=" M 4,0 8,8 0,8 Z" />
-                </g>
-
-                <g class="toolbox-object" data-object-type="line" transform="translate(-4,20) scale(1)">
-                  <rect class="bounding-box" width="8" height="8" fill="transparent" stroke="none" />
-                  <line class="toolbox-object" data-object-type="line" _transform="translate(0,-8) scale(1)" x1="0" x2=8 y1="0" y2="8" stroke="#00000025" _stroke-width="0.35"></line>
-                </g>
-              </g>
-            </g>
-          </g>
-
-        </g>
+        <g data-component-placeholder="hud"></g>
       </g>
     </svg>
   </template>

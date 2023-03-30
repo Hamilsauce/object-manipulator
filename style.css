@@ -1,5 +1,5 @@
 /* 
-var(--accent-orange)
+var(--accent-orange);
 */
 
 :root {
@@ -9,7 +9,7 @@ var(--accent-orange)
   --accent-white99: #FEF3F399;
   --audionode-yellow1: #C5CF3B;
   /* --accent-orange: #E1A12D; */
-  --accent-orange: #F9AD23;
+  --accent-orange: #FAA503;
 
 }
 
@@ -47,27 +47,22 @@ a {
   grid-template-rows: 41px 1fr 40px;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
-  /* justify-content: center; */
   gap: 0px;
   width: 100%;
   height: 100%;
-  margin: aut0;
-  /* background: #A05537; */
+  margin: auto;
   color: var(--accent-white);
   font-size: 18px;
   overflow: hidden;
 }
 
 #canvas {
-  /* background: #A28875; */
   border: 1px solid #E316AC;
   touch-action: none;
 }
 
 .node-body {
   rx: 0.1px;
-  /* stroke-width: 0.01px; */
-  /* stroke: #37393B; */
 }
 
 .app-button {}
@@ -85,7 +80,6 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  /* justify-content: center; */
   align-items: center;
   gap: 0px;
   padding: 4px 4px;
@@ -140,14 +134,12 @@ a {
   align-items: center;
   gap: 0px;
   padding: 0;
-  /* height: 24px; */
 }
 
 #param-row {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  /* justify-content: center; */
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
@@ -164,9 +156,7 @@ a {
   overflow: hidden;
 }
 
-#surface-layer {
-  /* filter: blur(0.065px); */
-}
+#surface-layer {}
 
 .hud-text {
   font-size: 0.4em;
@@ -176,7 +166,6 @@ a {
   stroke: #FEFEFE;
   stroke-width: 0.6px;
   filter: drop-shadow(0 0.0rem 0.8px #3C3D41AB);
-  /* transition: 0.2s; */
   overflow: hidden;
 }
 
@@ -199,8 +188,6 @@ a {
   overflow: hidden;
 }
 
-
-
 .toolbox-object>.toolbox-object {
   fill: #FEFEFE;
   stroke: #000000;
@@ -212,42 +199,57 @@ a {
 .canvas-object {
   fill: #FEFEFE;
   stroke: #000000;
-  /* stroke: #F9AD23; */
-  /* stroke-width: 0.5px; */
   filter: drop-shadow(0 0.003rem 0.005rem #37393D65);
 }
 
 .canvas-object * {
   transition: 0.2s;
-
 }
 
 .selector-marker {
   fill: transparent;
   stroke: #F9AD23;
-  stroke-width: 0.05rem;
-  /* filter: drop-shadow(0 0.003rem 0.005rem #37393D87); */
-  /* filter: drop-shadow(0 0.0009rem 0.008rem #37393DE0); */
-  /* filter: drop-shadow(0 0.003rem 0.001rem #37393D65); */
-  /* background: #E1A12D; */
+  stroke-width: 0.015rem;
+  filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
+}
+
+#scene .object-container[data-selected=false][data-focused=false] {
+  filter: drop-shadow(0 0 0 #FFFFFF00);
+}
+
+#scene .object-container[data-selected=false][data-focused=false] .overlay-slot * {
+  fill: transparent;
+  stroke: transparent;
+  opacity: 0;
+}
+#scene .object-container[data-selected=false][data-focused=false] .vertex {
+  fill: transparent;
+  stroke: transparent;
+  opacity: 0;
+}
+
+#scene .object-container[data-selected=false][data-focused=false] .selector-marker {
+  fill: transparent;
+  stroke: transparent;
+  filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
 }
 
 .object-container[data-selected=true][data-focused=false] .selector-marker {
-  fill: transparent;
+  /* fill: transparent; */
   stroke: #F9AD23;
   stroke-width: 0.05rem;
+  filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
 }
 
 .object-container[data-focused=true] .selector-marker {
   fill: transparent;
   stroke: #F01010;
-  stroke-width: 0.055rem;
-  filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
-  /* filter: drop-shadow(0 0.003rem 0.001rem #37393D65); */
-  /* background: #E1A12D; */
+  stroke: var(--accent-orange);
+  stroke-width: 0.05rem;
+  filter: drop-shadow(0 0.07rem 0.0025rem #535559B3) contrast(1.4);
 }
 
-.object-container[data-focused=true] .object-slot>* {
+.object-container[data-focused=true] .object-slot {
   filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
 }
 
@@ -275,7 +277,6 @@ a {
   gap: 4px;
   width: 100%;
   height: 100%;
-  /* background: #EAEAEA; */
   color: #504E4E;
   font-size: 12px;
 }
@@ -290,7 +291,6 @@ a {
   padding: 4px;
   font-weight: 800;
   backdrop-filter: brightness(0.9);
-  /* filter: brightness(0.8); */
 }
 
 .content-field {
@@ -315,17 +315,29 @@ a {
 
 .coord-text {
   font-weight: 700;
-  fill: #2C2C2C;
-  /* stroke: #2C2C2C; */
-  stroke-width: 0.0;
-  ;
+  font-size: 0.75rem;
+  fill: #16161694;
+  stroke: #FFFFFF90;
+  fill: #FFFFFFD4;
+  stroke: #00000090;
+  stroke-width: 0.035rem;
+  width: fit-content;
+  /* filter: invert(1); */
+}
+
+.vertex {
+  fill: red;
+  stroke: #222222;
+  r: 1.25px;
+  stroke-width: 0.0075rem;
+  /* stroke-width: 0; */
 }
 
 [data-object-type=point] {
   fill: red;
+  /* fill: #FF0000; */
   stroke: #000000;
   stroke-width: 0.01rem;
   r: 1.5px;
   filter: drop-shadow(0 0.063rem 0.0023rem #5355598F);
-
 }
