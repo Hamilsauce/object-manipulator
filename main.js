@@ -55,3 +55,52 @@ const insertComponent = (context, name, options) => {
 const svg = document.createElementNS(SVG_NS, 'svg')
 
 const application = new Application();
+
+
+// ZOOM
+
+setTimeout(() => {
+  const hud = application.components.canvas.layers.hud
+  const scene = application.components.canvas.layers.scene
+
+  console.log('hud.dom',hud.dom );
+
+  hud.dom.addEventListener('click', e => {
+    e.preventDefault()
+    e.stopPropagation()
+    e.stopImmediatePropagation()
+    
+    const vb = scene.dom.viewBox.baseVal
+    const zoomIn = e.target.closest('#hud-zoomIn')
+    const zoomOut = e.target.closest('#hud-zoomOut')
+    const isZoomIn = e.composedPath().some(el => el === hud.zoomIn)
+    const isZoomOut = e.composedPath().some(el => el === hud.zoomOut)
+
+    // if (isZoomIn && Math.abs(zoom.level) < zoom.limit) {
+    if (zoomIn){
+      // zoom.direction++
+
+      Object.assign(vb, {
+        width: vb.width - vb.width / 6,
+        height: vb.height - vb.height / 4,
+        y: (vb.y - vb.height / -8),
+        x: (vb.x - vb.width / -12),
+      })
+    }
+
+    // else if (isZoomOut && Math.abs(zoom.level) < zoom.limit) {
+    else if (zoomOut){
+      // zoom.direction--
+
+      Object.assign(vb, {
+        width: vb.width + vb.width / 6,
+        height: vb.height + vb.height / 4,
+        y: (vb.y - vb.height / 8),
+        x: (vb.x - vb.width / 12),
+      })
+    }
+  });
+
+
+
+}, 1000)

@@ -36,30 +36,44 @@ export class GeometryObject extends SceneObject {
 
     this.setPath(vertices, pointsToPathFn);
 
-    this.vertices.forEach((v, i) => {
-      this.createVertex(this.context, v, i)
+    this.vertices = vertices.map((vert, i) => {
+      return { ...vert, dom: this.createVertex(vert, i) }
     });
 
+    // this.vertices.forEach((v, i) => {
+    //   this.createVertex(this.context, v, i)
+    // });
 
-    this.vertexEvents$ = fromEvent(this.dom, 'pointermove')
+    this.vertexEvents$ = fromEvent(this.dom, 'pointerdown')
       .pipe(
-        filter(({ target }) => target.classList.contains('vertex')),
-        map(({ target, clientX, clientY }) => {
-          const p = domPoint(target, clientX, clientY)
-          return {
-            target,
-            index: +target.dataset.index,
-            x: p.x,
-            y: p.y
-          }
 
-        }),
-        tap(({ index, x, y }) => {
-          const verts = [...this.vertices, { ...this.vertices[index], x, y }];
-          console.log('verts', verts)
-          this.setPath(verts)
-        }),
-        tap(x => console.log('vertexEvents$', x))
+        filter(({ target }) => target.classList.contains('vertex')),
+        switchMap(event => fromEvent(this.dom, 'pointermove')
+          // this.vertexEvents$ = fromEvent(this.dom, 'pointermove')
+          .pipe(
+            // tap(x => console.log('this.dom', this.dom)),
+            map(({ target, clientX, clientY }) => {
+              const p = domPoint(this.dom, clientX, clientY)
+              console.log('POINT:v', p.x, p.y)
+              return {
+                dom: target,
+                index: +target.dataset.index,
+                x: p.x,
+                y: p.y
+              }
+            }),
+            tap(({ index, x, y, dom }) => {
+              // const verts = [...this.vertices, { ...this.vertices[index], x, y }];
+              // const vert = this.vertices[index]
+              // const verts = [..., { ...this.vertices[index], x, y }];
+              this.setVertices({ index, x, y, dom })
+              // this.vertices[index] = { ...this.vertices[index], ...{ x, y } }
+              // console.log('this.vertices', this.vertices)
+              // this.setPath(this.vertices)
+            }),
+          ))
+
+        // tap(x => console.log('vertexEvents$', x))
       );
 
     this.vertexEvents$.subscribe()
@@ -87,7 +101,19 @@ export class GeometryObject extends SceneObject {
     this.d = pathData;
   }
 
-  createVertex(context, { x, y }, index) {
+  setVertices(...verts) {
+    verts.forEach(({ index, x, y, dom }, i) => {
+      // const vert = this.vertices[index]
+      this.vertices[index] = { ...this.vertices[index], x, y, dom }
+      // this.createVertex(this.context, v, i)
+      this.vertices[index].dom.setAttribute('transform', `translate(${this.vertices[index].x},${this.vertices[index].y})`)
+    });
+
+    this.setPath(this.vertices)
+    console.log('this.vertices', { x: this.vertices[2].x, y: this.vertices[2].y })
+  }
+
+  createVertex({ x, y }, index) {
     const obj = this.context.templates.querySelector(`[data-template="vertex"]`).cloneNode(true);
 
     delete obj.dataset.template;
@@ -96,7 +122,10 @@ export class GeometryObject extends SceneObject {
     obj.dataset.index = index;
     obj.cx.baseVal.value = x;
     obj.cy.baseVal.value = y;
+    obj.setAttribute('transform', `translate(${x},${y})`)
 
-    this.slots.object.append(obj)
+    this.slots.object.append(obj);
+
+    return obj;
   }
 }

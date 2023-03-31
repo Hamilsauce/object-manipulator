@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <title>cta</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.min.js" integrity="sha512-y3JTS47nnpKORJX8Jn1Rlm+QgRIIZHtu3hWxal0e81avPrqUH48yk+aCi+gprT0RMAcpYa0WCkapxe+bpBHD6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="./cta-map.css" />
+</head>
+
+<body>
+  <div id="app">
+    <svg id="svg-root" data-scom-type="root-host" width="384" height="722" viewBox="0 0 384 722" _preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+        <pattern id="smallGrid" width="2.5" height="2.5" patternUnits="userSpaceOnUse">
+          <path id="smallGridPath" d="M 2.5 0 H 0 V 2.5" fill="none" stroke="#5F656630" stroke-width="0.15" />
+        </pattern>
+        <pattern id="largeGrid" width="5" height="5" patternUnits="userSpaceOnUse">
+          <rect id="largeGridRect" width="5" height="5" fill="url(#smallGrid)" />
+          <path id="largeGridPath" d="M 5 0 H 0 V 5" fill="none" stroke="#5F656630" stroke-width="0.15" />
+        </pattern>
+        <marker id="trianglestart" viewBox="éwwwq0 0 1 1" refX="0" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+          <path d="M 5 0 L 0 5 L 5 5 z" />
+        </marker>
+        <marker id="triangleend" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" />
+        </marker>
+      </defs>
+
+      <svg id="canvas" class="scom-host" data-scom-type="host" data-scom-name="canvas" x="0" y="0" width="384" height="722" viewBox="-20 -20 40 40" _preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- <g id="scene" class="layer" data-scom-name="scene" data-scom-type="layer" transform="translate(-460,-625)" x="0" y="0"> -->
+        <g id="scene" class="layer" data-scom-name="scene" data-scom-type="layer" transform="translate(-500,-500)" x="0" y="0">
+
+          <g id="scene-surface" class="layer-aspect" data-scom-name="scene-surface" data-scom-type="aspect" transform="translate(0,0) scale(1)">
+            <rect id="surface-face" class="aspect-component" data-scom-name="surface-face" x="0" y="0" width="1000" height="1000" rx="2" stroke="#FFFFFF90" />
+            <g id="axes" transform="translate(500,500)">
+              <line id="yaxis" class="axis" x1="0" x2="0" y1="-1000" y2="1000" stroke-width="0.5"></line>
+              <line id="xaxis" class="axis" x1="-1000" x2="1000" y1="0" y2="0" stroke-width="0.5"></line>
+            </g>
+          </g>
+
+          <g id="scene-objects" class="layer-aspect" data-scom-name="scene-objects" data-scom-type="aspect" transform="rotate(-86) translate(-8840,18060) scale(200)"></g>
+
+        </g>
+      </svg>
+
+
+
+      <g id="hud" class="layer" data-scom-type="layer" data-scom-name="hud" transform="translate(-0,-0)" x="0" y="0">
+
+        <g id="hud-toolbar" class="hud-container layer-aspect" data-scom-type="layer-aspect"  transform="translate(150,672)" x="0" y="0">
+          <rect id="hud-toolbar-face" class="hud-face aspect-component" x="0" y="0" width="90" height="44" rx="2" stroke="#FFFFFF90" />
+
+          <g id="hud-pan-tool" class="hud-button component" data-scom-name="pan-tool" transform="translate(0,0)" x="0" y="0">
+            <rect id="pan-tool-face" class="button-face" _data-scom-name="pan-tool-face" x="0" y="0" width="44" height="44" rx="2" _stroke="#FFFFFF90" />
+            <path id="pan-tool-icon" class="hud-button-icon" _data-scom-name="pan-tool" _fill="#FFFFFF" transform="translate(0,2) scale(0.08)" d="M 382.5,69.5 c-7.441,0 -15,1.646-20.852,4.573 c-4.309-23.218-24.7-40.859-49.148-40.859 c-7.68,0 -15,1.75 -21.467,5 C285.641,16.205,265.932,0,242.5,0 c-23.432,0-43.141,16.206-48.533,37.995 c-6.508-3.107-13.787-4.852-21.467-4.852 c-27.57,0-50,22.43-50,50 v122.222 c-6.129-2.686-12.891-4.187-20-4.187 c-27.57,0-50,22.43-50,50 V354 c0,72.233,58.766,131,131,131 h118 c72.233,0,131-58.767,131-131 V119.429 C432.5,91.858,410.07,69.5,382.5,69.5z M402.5,354 c0,55.691-45.3,101-101,101 h-118 c-55.691,0-101-45.3-101-101 V251 c0-11,9-20,20-20s20,9,20,20  v80 h30 V83.143 c0-11,9-20,20-20s 20,9,20,20 v158 h30 V50 c0-11,9-20,20-20 c11,0,20,9,20,20  v191 h30 V83.143 c0-11,9-20,20-20s20,9,20,20v158.035h30,v-121.75 c0-11,9-20,20-20s20,9,20,20 V354z" />
+          </g>
+
+          <g id="hud-selection-tool" class="hud-button component" data-scom-name="selection-tool" transform="translate(55,0)" x="0" y="0">
+            <rect id="selection-tool-face" class="button-face" _data-scom-name="selection-tool-face" x="0" y="0" width="44" height="44" rx="2" _stroke="#FFFFFF90" />
+            <path id="select-tool-icon" class="hud-button-icon" _data-scom-name="selection-tool" _fill="#FFFFFF" transform="translate(10,2) scale(0.15)" d=" M 161.5258,159.0376 0,0 0.8521,225.2117 72.5243,172.1752 Z M 103.9254,186.3632 161.297,185.7633 161.9012,242.7233 104.5296,243.3232 Z" />
+          </g>
+        </g>
+
+
+        <g id="hud-zoom" class="hud-container button-container layer-aspect" data-scom-type="layer-aspect"  transform="translate(22,333)" x="0" y="0">
+
+          <g id="hud-zoomIn" class="hud-button aspect-component"  transform="translate(0)" x="0" y="0">
+            <circle id="hud-zoomIn-face" class="hud-face aspect-component" x="0" y="0" cx="0" cy="0" r="18" fill="white" />
+            <line id="zoomIn-horizontal-line" x1="-7" y1="0" x2="7" y2="0" stroke="#32333A" stroke-width="3"></line>
+            <line id="zoomIn-vertical-line" x1="0" y1="-7" x2="0" y2="7" stroke="#32333A" stroke-width="3"></line>
+          </g>
+
+          <g id="hud-zoomOut" class="hud-button aspect-component"  transform="translate(0, 38)" x="0" y="0">
+            <circle class="hud-face" x="0" y="0" cx="0" cy="0" r="18" fill="white" />
+            <line id="zoomOut-horizontal-line" x1="-7" y1="0" x2="7" y2="0" stroke="#32333A" stroke-width="3"></line>
+          </g>
+
+        </g>
+      
+      </g>
+
+    </svg>
+  </div>
+  <script type="text/javascript" charset="utf-8">
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+  </script>
+
+  <!-- <script src="./zoom.js"></script> -->
+  <script src="./cta-app.js" type="module"></script>
+  <!-- <script src="../data/train-csv-to-json.js" type="module"></script> -->
+</body>
+
+</html>

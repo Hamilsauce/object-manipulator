@@ -1,4 +1,6 @@
 import { roundTwo } from '../lib/utils.js';
+
+
 const TransformListOptions = {
   transforms: Array,
 }
@@ -13,14 +15,17 @@ const DEFAULT_TRANSFORMS = {
     {
       type: 'translation',
       values: [0, 0],
+      position: 0,
     },
     {
       type: 'rotate',
       values: [0, 0, 0],
+      position: 1,
     },
     {
       type: 'scale',
       values: [1, 1],
+      position: 2,
     },
   ]
 };
@@ -33,7 +38,7 @@ export class TransformList {
 
   constructor(contextObject, { transforms } = DEFAULT_TRANSFORMS) {
     this.#context = contextObject;
-    console.log('transforms', transforms)
+
     this.#self = contextObject.dom.transform.baseVal;
 
     this.init(transforms);

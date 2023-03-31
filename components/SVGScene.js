@@ -105,7 +105,7 @@ export class Scene extends Viewport {
 
 
     this.#sceneState$.pipe(
-      tap(x => console.warn('SCENE STATE$', x)),
+      tap(x => console.warn('[ SCENE STATE$ CHANGED ]: ', x)),
     ).subscribe()
 
     window._scene = this;
@@ -134,7 +134,7 @@ export class Scene extends Viewport {
   }
 
   handleSurfaceClick(e) {
-    const newObject = { ...testObject1, type: ObjectRegistry.keys[getRandomIndex()] }
+    const newObject = { ...testObject1, type: ObjectRegistry.keys[getRandomIndex()] };
 
     this.insertObject(newObject.type, {
       ...newObject
@@ -142,7 +142,7 @@ export class Scene extends Viewport {
   }
 
   handleObjectClick(e) {
-    const targ = e.target
+    const targ = e.target;
 
     const targetObj = e.target.closest('.object-container');
 

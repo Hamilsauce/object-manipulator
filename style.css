@@ -59,6 +59,7 @@ a {
 #canvas {
   border: 1px solid #E316AC;
   touch-action: none;
+  background: #FFFFFF;
 }
 
 .node-body {
@@ -156,7 +157,14 @@ a {
   overflow: hidden;
 }
 
+#scene {
+  /* background: #CE1919; */
+
+}
+
 #surface-layer {}
+
+#surface {}
 
 .hud-text {
   font-size: 0.4em;
@@ -211,6 +219,7 @@ a {
   stroke: #F9AD23;
   stroke-width: 0.015rem;
   filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
+  pointer-events: none;
 }
 
 #scene .object-container[data-selected=false][data-focused=false] {
@@ -222,6 +231,7 @@ a {
   stroke: transparent;
   opacity: 0;
 }
+
 #scene .object-container[data-selected=false][data-focused=false] .vertex {
   fill: transparent;
   stroke: transparent;

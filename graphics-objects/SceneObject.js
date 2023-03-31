@@ -56,15 +56,10 @@ export class SceneObject extends GraphicObject {
           x: this.x + (e.x - this.panOrigin.x),
           y: this.y + (e.y - this.panOrigin.y),
         });
-
-
+        
         this.setState();
 
-        // this.#state$.next({
-        //   ...this.#state$.getValue(),
-        //   ...this.bounds
-        // })
-
+        // this.#state$.next({...this.#state$.getValue(),...this.bounds })
       });
 
       this.dragSubscription = this.drag$

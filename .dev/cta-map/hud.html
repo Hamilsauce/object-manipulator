@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  <svg id="svg-canvas" style="background:#2B35A5;" width="412" height="690" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <g id="circle-container">
+        <circle id="circle-template" fill="teal" cx="0" cy="0" r=" 10" stroke="#000000" stroke-width="1" transform="translate(0,0) rotate(0) scale(1)" />
+      </g>
+
+    </defs>
+    <g id="scene" transform="translate(0,0) rotate(0) scale(1)">
+      <rect x="0" y="0" rx="0" ry="0" width="412" height="690" fill="#C7C7C7"></rect>
+
+      <line x1=" 2" y1="2" x2=" 7" y2="7"></line>
+      <line x1="25" y1="2" x2="20" y2="7"></line>
+      <path class="botLeft" d="m 1,26 6,-6"></path>
+      <path class="botRite" d="m 26,26 -6,-6"></path>
+      <rect x="1" y="1" rx="3" ry="3" width="25" height="25"></rect>
+      <path class="rectIn" d="m 7,7 0,13 13,0 0,-13 z" style="fill:gray;"></path>
+    </g>
+    <use href="#circle-container"></use>
+
+
+
+
+    <g id="hud" class="layer" transform="translate(-0,-0)" x="0" y="0">
+
+      <g id="hud-mode-toolbar" class="hud-container" transform="translate(150,672)" x="0" y="0">
+        <rect id="hud-mode-toolbar-face" class="hud-face" x="0" y="0" width="90" height="44" rx="2" stroke="#FFFFFF90" />
+
+        <g id="hud-pan-tool" class="hud-button component" transform="translate(0,0)" x="0" y="0">
+          <rect id="pan-tool-face" class="button-face" x="0" y="0" width="44" height="44" rx="2" />
+          <path id="pan-tool-icon" class="hud-button-icon" d="M 382.5,69.5 c-7.441,0 -15,1.646-20.852,4.573 c-4.309-23.218-24.7-40.859-49.148-40.859 c-7.68,0 -15,1.75 -21.467,5 C285.641,16.205,265.932,0,242.5,0 c-23.432,0-43.141,16.206-48.533,37.995 c-6.508-3.107-13.787-4.852-21.467-4.852 c-27.57,0-50,22.43-50,50 v122.222 c-6.129-2.686-12.891-4.187-20-4.187 c-27.57,0-50,22.43-50,50 V354 c0,72.233,58.766,131,131,131 h118 c72.233,0,131-58.767,131-131 V119.429 C432.5,91.858,410.07,69.5,382.5,69.5z M402.5,354 c0,55.691-45.3,101-101,101 h-118 c-55.691,0-101-45.3-101-101 V251 c0-11,9-20,20-20s20,9,20,20  v80 h30 V83.143 c0-11,9-20,20-20s 20,9,20,20 v158 h30 V50 c0-11,9-20,20-20 c11,0,20,9,20,20  v191 h30 V83.143 c0-11,9-20,20-20s20,9,20,20v158.035h30,v-121.75 c0-11,9-20,20-20s20,9,20,20 V354z" />
+        </g>
+
+        <g id="hud-selection-tool" class="hud-button component" transform="translate(55,0)" x="0" y="0">
+          <rect id="selection-tool-face" class="button-face" x="0" y="0" width="44" height="44" rx="2" />
+          <path id="select-tool-icon" class="hud-button-icon" transform="translate(10,2) scale(0.15)" d=" M 161.5258,159.0376 0,0 0.8521,225.2117 72.5243,172.1752 Z M 103.9254,186.3632 161.297,185.7633 161.9012,242.7233 104.5296,243.3232 Z" />
+        </g>
+      </g>
+      <g id="hud-zoom" class="hud-container button-container" transform="translate(22,333)" x="0" y="0">
+        <g id="hud-zoomIn" class="hud-button" transform="translate(0,0)" x="0" y="0">
+          <circle id="hud-zoomIn-face" class="hud-face" x="0" y="0" cx="0" cy="0" r="18" fill="white" />
+          <line id="zoomIn-horizontal-line" x1="-7" y1="0" x2="7" y2="0" stroke="#32333A" stroke-width="3"></line>
+          <line id="zoomIn-vertical-line" x1="0" y1="-7" x2="0" y2="7" stroke="#32333A" stroke-width="3"></line>
+        </g>
+
+        <g id="hud-zoomOut" class="hud-button" transform="translate(0,38)" x="0" y="0">
+          <circle class="hud-face" x="0" y="0" cx="0" cy="0" r="18" fill="white" />
+          <line id="zoomOut-horizontal-line" x1="-7" y1="0" x2="7" y2="0" stroke="#32333A" stroke-width="3"></line>
+        </g>
+
+      </g>
+
+    </g>
+
+  </svg>
+</body>
+
+</html>

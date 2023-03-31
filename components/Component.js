@@ -111,11 +111,11 @@ export class Component extends EventEmitter {
 
     const component = new options.componentClass(context, options)
 
-    context.components[name] = component
+    context.components[name] = component;
 
     placeholder.replaceWith(component.dom);
 
-    return context.components[name]
+    return context.components[name];
   }
 
   static uuid(name) {
