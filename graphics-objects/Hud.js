@@ -1,5 +1,6 @@
 import { ViewportLayer } from './ViewportLayer.js';
 import { ObjectRegistry } from './ObjectRegistry.js';
+import { initDetailPane } from './DetailPane.js';
 
 const CanvasOptions = {
   type: 'viewport',
@@ -42,6 +43,19 @@ const CanvasOptions = {
   }
 };
 
+const NULL_DETAIL_PANE = {
+  x: '--',
+  y: '--',
+  left: '--',
+  right: '--',
+  top: '--',
+  bottom: '--',
+  width: '--',
+  height: '--',
+  vertices: [],
+}
+
+
 export class Hud extends ViewportLayer {
   constructor(context, options) {
     super(context, 'hud', { ...options, id: 'hud' });
@@ -53,9 +67,13 @@ export class Hud extends ViewportLayer {
 
     this.originElX = originElX
     this.originElY = originElY
+    this.detailPane = initDetailPane(this)
+
+    this.updateDetailPane = this.#updateDetailPane.bind(this)
+
 
     this.widgets.toolbox.addEventListener('click', e => {
-      e.preventDefault()
+      // e.preventDefault()
       e.stopPropagation()
 
       const targ = e.target.closest('g.toolbox-object')
@@ -63,13 +81,11 @@ export class Hud extends ViewportLayer {
       if (targ) {
         const type = targ.dataset.objectType
         if (type) {
-          console.log('type', type)
           this.emit(type, e);
         }
       }
       else {
         const expanded = this.widgets.toolbox.dataset.expanded === 'true' ? true : false
-        console.log('expanded', expanded)
         this.widgets.toolbox.dataset.expanded = !expanded;
       }
     });
@@ -78,6 +94,7 @@ export class Hud extends ViewportLayer {
   get widgets() {
     return {
       toolbox: this.querySelector('#toolbox'),
+      detailPane: this.detailPane,
     }
   }
 
@@ -90,4 +107,17 @@ export class Hud extends ViewportLayer {
     }));
   }
 
+  #updateDetailPane(focusedObject) {
+    focusedObject = focusedObject ? focusedObject : NULL_DETAIL_PANE;
+    
+    this.widgets.detailPane.name.textContent = focusedObject.type + '-' + focusedObject.id.slice(0, 3)
+    this.widgets.detailPane.selected.textContent = focusedObject.selected;
+    this.widgets.detailPane.focused.textContent = focusedObject.focused;
+    this.widgets.detailPane.xcoord.textContent = Math.trunc(focusedObject.x || 0);
+    this.widgets.detailPane.ycoord.textContent = Math.trunc(focusedObject.y || 0);
+    this.widgets.detailPane.width.textContent = Math.trunc(focusedObject.width || 0);
+    this.widgets.detailPane.height.textContent = Math.trunc(focusedObject.height || 0);
+    this.widgets.detailPane.vertices.textContent = (focusedObject.vertices || []).length
+    return focusedObject;
+  }
 }

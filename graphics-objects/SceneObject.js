@@ -1,4 +1,5 @@
 import { GraphicObject } from './GraphicObject.js';
+import { addDragAction } from '../modules/drag-stream.js';
 
 const { forkJoin, Observable, iif, BehaviorSubject, AsyncSubject, Subject, interval, of, fromEvent, merge, empty, delay, from } = rxjs;
 const { distinctUntilChanged, shareReplay, flatMap, reduce, groupBy, toArray, mergeMap, switchMap, scan, map, tap, filter } = rxjs.operators;
@@ -22,23 +23,66 @@ const DEFAULT_SCENE_CONFIG = {
 
 
 export class SceneObject extends GraphicObject {
-  #state$ = new BehaviorSubject({
-    type: 'rect',
-    point: {},
-    dimensions: {},
-  });
+  #state$ = null
 
   constructor(context, type, options = SceneObjectOptions) {
-    // console.warn('SCENE OBJEXT context, type, dimensions, point', context, type, dimensions, point)
-    super(context, type, options = SceneObjectOptions);
+    super(context, type, options);
+    this.#state$ = new BehaviorSubject(
+    {
+      ...(this.bounds || {}),
+      id: this.id,
+      type: this.type,
+      selected: this.selected,
+      focused: this.focused,
+      vertices: this.vertices,
+
+    });
 
   }
+
+  focus(state) {
+    this.dataset.focused = state ? state : !this.focused;
+    this.dataset.selected = this.dataset.focused === 'true' ? true : this.dataset.focused;
+
+    if (this.focused) {
+      this.self.parentElement.append(this.self)
+
+      this.drag$ = addDragAction.bind(this)(this, e => {
+        if (e.type == 'pointerdown') {
+          this.panOrigin = { x: e.x, y: e.y }
+        }
+
+        super.translate({
+          x: this.x + (e.x - this.panOrigin.x),
+          y: this.y + (e.y - this.panOrigin.y),
+        });
+
+
+        this.setState();
+
+        // this.#state$.next({
+        //   ...this.#state$.getValue(),
+        //   ...this.bounds
+        // })
+
+      });
+
+      this.dragSubscription = this.drag$
+        .subscribe() //this.#state$)
+    }
+
+    else {
+      if (this.dragSubscription && this.dragSubscription.unsubscribe) {
+        console.warn('this.dragSubscription', this.dragSubscription)
+        this.dragSubscription.unsubscribe()
+      }
+    }
+  }
+
 
   observe(options = {}) {
     const state$ = this.#state$.asObservable()
       .pipe(
-        map(x => x),
-        tap(x => console.log('observe', x)),
         distinctUntilChanged(),
         shareReplay(1),
       );
@@ -46,7 +90,17 @@ export class SceneObject extends GraphicObject {
     return state$;
   }
 
-  setState(stateMap = {}) {}
+  setState(stateMap = {}) {
+    this.#state$.next({
+      ...this.#state$.getValue(),
+      ...this.bounds,
+      id: this.id,
+      type: this.type,
+      selected: this.selected,
+      focused: this.focused,
+      vertices: this.vertices,
+    })
+  }
 
 
   static create(context, { type, template, point, dimensions, isInterface, } = SceneObjectOptions) {

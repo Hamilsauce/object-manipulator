@@ -50,8 +50,8 @@ export class SVGCanvas extends Viewport {
     super(context, 'canvas', options);
     // console.log('SVGCanvas', this);
 
-   this.createObject$ = fromEvent(this.dom, 'createobject').pipe(
-      tap(x => console.warn('SVGCanvas [[[ CREATE OBJECT ]]] EVENTS', x)),
+    this.createObject$ = fromEvent(this.dom, 'createobject').pipe(
+      // tap(x => console.warn('SVGCanvas [[[ CREATE OBJECT ]]] EVENTS', x)),
       tap(this.objectEvents$),
       tap((e) => {
         const { object, objectId, target, action } = e.detail
@@ -60,14 +60,20 @@ export class SVGCanvas extends Viewport {
         this.layers.scene.insertObject(action)
       }),
     );
-    
+
     this.createObjectSubscription = this.createObject$.subscribe();
+
+    this.focusedObjectSubscription = this.layers.scene.focusedObject$
+      .pipe(
+        tap(this.layers.hud.updateDetailPane),
+      )
+      .subscribe();
   }
 
   get layers() {
     return {
       scene: this.components.scene,
-      hud: this.querySelector('#hud'),
+      hud: this.components.hud,
     }
   }
 }

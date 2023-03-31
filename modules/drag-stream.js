@@ -44,7 +44,17 @@ export const addDragAction = (object, callback) => {
   );
 
   const dragMove$ = pointermove$.pipe(
-    switchMap(createObjectDragEvent$),
+    switchMap(e => createObjectDragEvent$(e)
+      .pipe(
+        // map(({ object, type, x, y }) => {
+        //   return {
+        //     x: object.x + (x - panOrigin.x),
+        //     y: object.y + (y - panOrigin.y),
+        //   }
+        // }),
+      )
+    ),
+
     tap(callback),
   );
 
@@ -60,14 +70,25 @@ export const addDragAction = (object, callback) => {
   return dragStart$.pipe(
     switchMap(startEvent => dragMove$
       .pipe(
-        map(({ object, type, x, y }) => {
-          return {
-            x: object.x + (x - panOrigin.x),
-            y: object.y + (y - panOrigin.y),
-          }
-        }),
-        switchMap(moveEvent => dragEnd$.pipe())
+        // switchMap(moveEvent => dragEnd$.pipe(
+        //   map(x => x),
+        //   tap(x => console.log('TAP', x)),
+
+        // )),
+        // takeUntil(dragEnd$),
+
       )
-    )
-  )
+    ),
+    takeUntil(dragEnd$),
+
+  );
+  //   // map(({ object, type, x, y }) => {
+  //   //   return {
+  //   //     x: object.x + (x - panOrigin.x),
+  //   //     y: object.y + (y - panOrigin.y),
+  //   //   }
+  //   // }),
+  //   switchMap(moveEvent => dragEnd$.pipe())
+  //   switchMap(moveEvent => dragEnd$.pipe())
+  // 
 };

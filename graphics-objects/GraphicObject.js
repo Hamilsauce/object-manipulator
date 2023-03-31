@@ -9,6 +9,10 @@ import { domPoint } from '../lib/utils.js';
 
 const { template, DOM, utils } = ham;
 
+const { forkJoin, Observable, iif, BehaviorSubject, AsyncSubject, Subject, interval, of, fromEvent, merge, empty, delay, from } = rxjs;
+const { flatMap, reduce, groupBy, toArray, mergeMap, switchMap, scan, map, tap, filter } = rxjs.operators;
+
+
 export const GraphicObjectOptions = {
   type: '',
   dimensions: {
@@ -19,65 +23,6 @@ export const GraphicObjectOptions = {
   selected: false,
   focused: false,
 }
-
-
-const selectObject = (target) => {
-  target = target.closest('.object-container')
-
-  target.dataset.selected = true;
-
-  const sel = canvasTemplates
-    .querySelector(`[data-template="object-selector"]`)
-    .cloneNode(true);
-
-  target.querySelector(`.overlay-slot`)
-    .append(sel);
-
-  target.stopDrag = draggable(scene.dom, target);
-}
-
-const deselectObject = (target) => {
-  target = target.closest('.object-container')
-
-  const s = target.querySelector(`.overlay-slot`)
-
-  if (s) {
-    s.querySelector('.object-selector').remove();
-
-    if (target.stopDrag) {
-      target.stopDrag();
-    }
-  }
-
-  target.dataset.selected = false;
-  target.dataset.focused = false;
-}
-
-const focusObject = (target, state = null) => {
-  selectObject(target);
-
-  objectLayer.querySelectorAll('[data-focused="true"')
-    .forEach(_ => _.dataset.focused = false)
-
-  target.dataset.focused = true;
-
-  objectLayer.append(target);
-  const selectors = [...document.querySelectorAll('.object-container[data-focused="true"] .selector-marker')]
-
-  sceneObjectsStore.dispatch(setFocusedObject({ id: target.id }))
-}
-
-const unFocusObject = (target) => {
-  deselectObject(target);
-
-  target.dataset.focused = false;
-
-  sceneObjectsStore.dispatch(setFocusedObject({ id: target.id }))
-}
-
-
-
-
 
 export class GraphicObject {
   #self;
@@ -106,6 +51,8 @@ export class GraphicObject {
     this.#dimensions.radius = this.#dimensions.radius || this.#dimensions.width / 2;
     this.dataset.id = id ? id : this.#self.id;
 
+
+    // console.log('[this.point', this.point)
     this.#transforms = new TransformList(this, {
       transforms: [
         {
@@ -123,12 +70,32 @@ export class GraphicObject {
       ],
     });
 
+    if (context.state$) {
+      this.focusState$ = context.state$
+        .pipe(
+          map(({ focusedObjectId }) => focusedObjectId),
+          filter(id => this.focused || id === this.id),
+          tap(id => {
+            if (id === this.id) {
+              this.focus(true)
+            }
+            else {
+              this.focus(false)
+            }
+          }),
+          // tap(x => console.log('GRAPH OBJ this.focusState$  ', x)),
+        )
+        .subscribe()
+    }
+
     this.clickHandler = this.handleClick.bind(this);
 
     this.self.addEventListener('click', this.clickHandler)
   }
 
   get self() { return this.#self };
+  
+  get type() { return this.#type };
 
   get context() { return this.#context };
 
@@ -175,6 +142,15 @@ export class GraphicObject {
   }
 
   get bounds() {
+    if (!this.object) return {
+      ...this.point,
+      ...this.dimensions,
+      left: this.point.x + this.point.x,
+      right: this.point.x - this.point.x,
+      top: this.point.y + this.point.y,
+      bottom: this.point.y - this.point.y,
+    }
+
     const { x, y, width, height } = this.object.getBBox()
 
     return {
@@ -184,6 +160,9 @@ export class GraphicObject {
       right: this.x - x,
       top: this.y + y,
       bottom: this.y - y,
+      width,
+      height,
+      vertices: this.vertices
     }
   }
 
@@ -247,33 +226,38 @@ export class GraphicObject {
     this.dataset.selected = state ? state : !this.selected;
   }
 
-  focus(state) {
-    this.dataset.focused = state ? state : !this.focused;
-    this.dataset.selected = this.dataset.focused === 'true' ? true : this.dataset.focused;
+  // focus(state) {
+  //   this.dataset.focused = state ? state : !this.focused;
+  //   this.dataset.selected = this.dataset.focused === 'true' ? true : this.dataset.focused;
 
-    if (this.focused) {
-      this.self.parentElement.append(this.self)
+  //   if (this.focused) {
+  //     this.self.parentElement.append(this.self)
 
-      this.drag$ = addDragAction.bind(this)(this, e => {
-        if (e.type == 'pointerdown') {
-          this.panOrigin = { x: e.x, y: e.y }
-        }
+  //     this.drag$ = addDragAction.bind(this)(this, e => {
+  //       if (e.type == 'pointerdown') {
+  //         this.panOrigin = { x: e.x, y: e.y }
+  //       }
 
-        this.translate({
-          x: this.x + (e.x - this.panOrigin.x),
-          y: this.y + (e.y - this.panOrigin.y),
-        });
-      });
+  //       this.translate({
+  //         x: this.x + (e.x - this.panOrigin.x),
+  //         y: this.y + (e.y - this.panOrigin.y),
+  //       });
+  //     });
 
-      this.dragSubscription = this.drag$.subscribe()
-    }
+  //     this.dragSubscription = this.drag$
+  //       .pipe(
+  //         tap(() => ''),
+  //         tap(x => console.log('TAP', x))
+  //       )
+  //     .subscribe()
+  //   }
 
-    else {
-      if (this.dragSubscription && this.dragSubscription.unsubscribe) {
-        this.dragSubscription.unsubscribe()
-      }
-    }
-  }
+  //   else {
+  //     if (this.dragSubscription && this.dragSubscription.unsubscribe) {
+  //       this.dragSubscription.unsubscribe()
+  //     }
+  //   }
+  // }
 
   stopDrag() {}
 
@@ -315,9 +299,8 @@ export class GraphicObject {
   }
 
   handleClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
+    // e.preventDefault();
+    // e.stopPropagation();
 
     this.emit('objectclick', e);
   }
