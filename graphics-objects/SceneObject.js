@@ -52,7 +52,7 @@ export class SceneObject extends GraphicObject {
           this.panOrigin = { x: e.x, y: e.y }
         }
 
-        super.translate({
+        this.translate({
           x: this.x + (e.x - this.panOrigin.x),
           y: this.y + (e.y - this.panOrigin.y),
         });

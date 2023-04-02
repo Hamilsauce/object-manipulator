@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+<svg id="svg-canvas" style="background:#2B35A5;" width="412" height="690" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <g id="circle-container">
+            <circle id="circle-template" fill="teal" cx="0" cy="0" r=" 10" stroke="#000000" stroke-width="1" transform="translate(0,0) rotate(0) scale(1)" />
+          </g>
+
+        </defs>
+      
+       <defs> 
+        <pattern id="smallGrid" style="z-index: 0" width="2" height="2" patternUnits="userSpaceOnUse"> 
+         <path id="smallGridPath" style="z-index: 0" d="M 2 0 H 0 V 2" fill="none" stroke="#C9C9C985" stroke-width="0.1"></path> 
+        </pattern> 
+        <pattern id="largeGrid" style="z-index: 0" width="8" height="8" patternUnits="userSpaceOnUse"> 
+         <rect id="largeGridRect" style="z-index: 0" width="8" height="8" fill="url(#smallGrid)"></rect> 
+         <path id="largeGridPath" style="z-index: 0" d="M 8 0 H 0 V 8" fill="none" stroke="#C9C9C9" stroke-width="0.1"></path> 
+        </pattern> 
+        <marker id="trianglestart" style="z-index: 0" viewBox="0 0 1 1" refX="0" refY="5" markerWidth="8" markerHeight="8" orient="auto"> 
+         <path d="M 10 0 L 0 5 L 10 10 z"></path> 
+        </marker> 
+        <marker id="triangleend" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto"> 
+         <path d="M 0 0 L 10 5 L 0 10 z"></path> 
+        </marker> <!-- TEMPLATES --> 
+        <g id="templates"> 
+         <circle data-template="vertex" class="vertex" transform="translate(0,0)" cx="0" cy="0" r="1.25" fill="red" stroke="#000000" stroke-width="0.05rem"></circle> 
+         <g data-template="object-container" class="object-container" id="" data-selected="false" data-focused="false" transform="translate(0,0) scale(1)"> 
+          <rect class="bounding-box object-bounding-box" width="16" height="16" transform="translate(-8,-8) scale(1)" fill="transparent" stroke="none"></rect> 
+          <g class="object-slot" transform="translate(0,0) scale(1)"></g> 
+          <g class="overlay-slot" transform="translate(0,0) scale(1)"></g> 
+         </g> 
+         <g data-template="object-selector" class="object-selector" transform="translate(0,0)"> 
+          <g class="selector-markers" transform="translate(0,0) scale(1)"> 
+           <polyline class="selector-marker" points="-11,-5 -11,-11 -5,-11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+           <polyline class="selector-marker" points="11,5 11,11 5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+           <polyline class="selector-marker" points="5,-11 11,-11 11,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+           <polyline class="selector-marker" points="-11,5 -11,11 -5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+          </g> 
+          <g class="app-button" transform="translate(12,-11) rotate(0) scale(0.2)"> 
+           <rect class="bounding-box" width="24" height="24" rx="4" transform="translate(-0.5,-0.5)" fill="orange" stroke="#000000" stroke-width="0.08rem"></rect> 
+           <g transform="translate(18,3) rotate(45) scale(1)"> 
+            <path fill="#FFFFFF" id="eraser" d=" M 0,0 4,0 4,2 0,2 Z"></path> 
+            <path fill="#FFFFFF" id="body" d=" M 0,2.75 4,2.75 4,18 0,18 Z"></path> 
+            <path fill="#FFFFFF" id="tip" d=" M 0,18.75 4,18.75 2,22 0,18.75 Z"></path> 
+           </g> 
+          </g> 
+         </g> 
+         <g class="canvas-object" data-template="content" transform="translate(0,0) scale(1)"> 
+          <foreignObject class="content-object"></foreignObject> 
+         </g> 
+        </g> 
+       </defs> <g id="surface-layer" data-layer="surface" class="layer" transform="translate(-0,-0)"> 
+        <rect transform="translate(0,-0)" id="surface" x="-1024" y="-1024" width="2048" height="2048" fill="url(#largeGrid)"></rect> 
+        <g id="axes" transform="translate(0,0)"> 
+         <line id="xaxis" class="axis" x1="-1000" x2="1000" y1="0" y2="0" stroke="#00000025" stroke-width="0.35"></line> 
+         <line id="yaxis" class="axis" x1="0" x2="0" y1="-1000" y2="1000" stroke="#00000025" stroke-width="0.35"></line> 
+        </g> 
+       </g> <g id="object-layer" class="layer" data-layer="objects" transform="translate(-0,-0)"> <!--  TEST OBJECT IN SCENE  --> 
+        <g id="test-object1" class="object-container" data-focused="true" data-selected="true" data-object-type="triangle" transform="translate(20,20) rotate(0,0,0) scale(16)"> 
+         <rect class="bounding-box" width="1" height="1" transform="translate(-0.5,-0.5) scale(1)" fill="transparent" stroke="blue" stroke-width="0.05"></rect> 
+         <g class="object-slot" transform="translate(-0.5,-0.5) scale(1)"> 
+          <path class="_canvas-object" data-object-type="triangle" fill="#FFFFFF" stroke="#000000" stroke-width="0.05" transform="translate(0,0)" d=" 
+                  M 0.5,0 1,1 0,1 Z"></path> 
+          <circle class="_vertex" transform="translate(0.5,0)" cx="0" cy="0" r="0.125" fill="red" stroke="#000000" stroke-width="0.05"></circle> 
+          <circle class="_vertex" transform="translate(1,1)" cx="0" cy="0" r="0.125" fill="red" stroke="#000000" stroke-width="0.05"></circle> 
+          <circle class="_vertex" transform="translate(0,1)" cx="0" cy="0" r="0.125" fill="red" stroke="#000000" stroke-width="0.05"></circle> 
+         </g> 
+         <g class="overlay-slot" transform="translate(0,0) scale(1)"> 
+          <g data-template="object-selector" class="_object-selector" transform="translate(0,0)"> 
+           <g class="_selector-markers" transform="translate(0,0) scale(1)"> 
+            <polyline class="_selector-marker" points="-0.8,-0.5 -0.8,-0.8 -0.5,-0.8" fill="transparent" stroke="orange" stroke-width="0.05" style="filter: drop-shadow(0 0.063rem 0.0025rem #1BD353);"></polyline> 
+            <polyline class="selector-marker" points="11,5 11,11 5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+            <polyline class="selector-marker" points="5,-11 11,-11 11,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+            <polyline class="selector-marker" points="-11,5 -11,11 -5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+           </g> 
+           <g class="app-button" _transform-origin="center center" transform="translate(12,-11) rotate(0) scale(0.2)"> 
+            <rect class="bounding-box" width="24" height="24" rx="4" transform="translate(-0.5,-0.5)" fill="orange" stroke="#000000" stroke-width="0.08rem"></rect> 
+            <g transform="translate(18,3) rotate(45) scale(1)"> 
+             <path fill="#FFFFFF" id="eraser" d=" M 0,0 4,0 4,2 0,2 Z"></path> 
+             <path fill="#FFFFFF" id="body" d=" M 0,2.75 4,2.75 4,18 0,18 Z"></path> 
+             <path fill="#FFFFFF" id="tip" d=" M 0,18.75 4,18.75 2,22 0,18.75 Z"></path> 
+            </g> 
+           </g> 
+          </g> 
+         </g> 
+        </g> 
+       <g class="object-container" id="tbwft9lczmazxmqymtx6" data-selected="true" data-focused="true" transform="translate(0 0) rotate(0) scale(1 1)" data-type="triangle" data-component="triangle" data-id="tbwft9lczmazxmqymtx6" style="touch-action: none;"> 
+          <rect class="bounding-box object-bounding-box" width="16" height="16" transform="translate(-8,-8) scale(1)" fill="transparent" stroke="none"></rect> 
+          <g class="object-slot" transform="translate(-8,-8)"><path class="canvas-object penus" data-type="triangle" data-component="triangle" d="M  0.49630498029347336,-6.842793826265776 16,16 0,16Z"></path><circle class="vertex" transform="translate(0.49630498029347336,-6.842793826265776)" cx="0" cy="0" r="1.25" fill="red" stroke="#000000" stroke-width="0.05rem" data-component="vertex" data-index="0"></circle><circle class="vertex" transform="translate(16,16)" cx="0" cy="0" r="1.25" fill="red" stroke="#000000" stroke-width="0.05rem" data-component="vertex" data-index="1"></circle><circle class="vertex" transform="translate(0,16)" cx="0" cy="0" r="1.25" fill="red" stroke="#000000" stroke-width="0.05rem" data-component="vertex" data-index="2"></circle></g> 
+          <g class="overlay-slot" transform="translate(0,0) scale(1)"><g data-template="object-selector" class="object-selector" transform="translate(0,0)"> 
+          <g class="selector-markers" transform="translate(0,0) scale(1)"> 
+           <polyline class="selector-marker" points="-11,-5 -11,-11 -5,-11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+           <polyline class="selector-marker" points="11,5 11,11 5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+           <polyline class="selector-marker" points="5,-11 11,-11 11,-5" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+           <polyline class="selector-marker" points="-11,5 -11,11 -5,11" _style="fill:transparent;stroke:#F9AD23;stroke-width:0.05rem;"></polyline> 
+          </g> 
+          <g class="app-button" transform="translate(12,-11) rotate(0) scale(0.2)"> 
+           <rect class="bounding-box" width="24" height="24" rx="4" transform="translate(-0.5,-0.5)" fill="orange" stroke="#000000" stroke-width="0.08rem"></rect> 
+           <g transform="translate(18,3) rotate(45) scale(1)"> 
+            <path fill="#FFFFFF" id="eraser" d=" M 0,0 4,0 4,2 0,2 Z"></path> 
+            <path fill="#FFFFFF" id="body" d=" M 0,2.75 4,2.75 4,18 0,18 Z"></path> 
+            <path fill="#FFFFFF" id="tip" d=" M 0,18.75 4,18.75 2,22 0,18.75 Z"></path> 
+           </g> 
+          </g> 
+         </g></g> 
+         </g></g> <circle class="canvas-object" data-object-type="point" transform="translate(20,-20)" r="0.2"></circle> <g id="origin" transform="translate(0,0) scale(0.16)" _style="font-size:0.8rem;f_pont-weight:600;"> 
+        <circle id="origin-marker" transform="translate(0,0)" r="8" fill="#C2C2C230" stroke="#00000050" stroke-width="0.1rem"></circle> 
+        <text class="coord-text" id="origin-coords" x="" y="20" text-anchor="middle">
+         0, 0
+        </text> 
+       </g> 
+        
+      
+      </svg>
+</body>
+
+</html>
+

@@ -18,7 +18,6 @@ const ShapeOptions = {
 }
 
 export class GeometryObject extends SceneObject {
-  // vertices = [];
   panOrigin = { x: 0, y: 0 };
 
   constructor(svgContext, type, vertices, options, pointsToPathFn) {
@@ -40,18 +39,12 @@ export class GeometryObject extends SceneObject {
       return { ...vert, dom: this.createVertex(vert, i) }
     });
 
-    // this.vertices.forEach((v, i) => {
-    //   this.createVertex(this.context, v, i)
-    // });
-
     this.vertexEvents$ = fromEvent(this.dom, 'pointerdown')
       .pipe(
-
         filter(({ target }) => target.classList.contains('vertex')),
         switchMap(event => fromEvent(this.dom, 'pointermove')
-          // this.vertexEvents$ = fromEvent(this.dom, 'pointermove')
           .pipe(
-            // tap(x => console.log('this.dom', this.dom)),
+            filter(({ target }) => target.classList.contains('vertex')),
             map(({ target, clientX, clientY }) => {
               const p = domPoint(this.dom, clientX, clientY)
               console.log('POINT:v', p.x, p.y)
@@ -63,13 +56,7 @@ export class GeometryObject extends SceneObject {
               }
             }),
             tap(({ index, x, y, dom }) => {
-              // const verts = [...this.vertices, { ...this.vertices[index], x, y }];
-              // const vert = this.vertices[index]
-              // const verts = [..., { ...this.vertices[index], x, y }];
               this.setVertices({ index, x, y, dom })
-              // this.vertices[index] = { ...this.vertices[index], ...{ x, y } }
-              // console.log('this.vertices', this.vertices)
-              // this.setPath(this.vertices)
             }),
           ))
 
@@ -94,6 +81,7 @@ export class GeometryObject extends SceneObject {
   updatePath() {}
 
   setPath(vertices, pointsToPathFn) {
+    console.log('vertices', vertices)
     const pathData = pointsToPathFn ?
       pointsToPathFn(this) :
       vertices.reduce((acc, { x, y }) => `${acc} ${x},${y}`, 'M ') + 'Z';
@@ -103,14 +91,11 @@ export class GeometryObject extends SceneObject {
 
   setVertices(...verts) {
     verts.forEach(({ index, x, y, dom }, i) => {
-      // const vert = this.vertices[index]
       this.vertices[index] = { ...this.vertices[index], x, y, dom }
-      // this.createVertex(this.context, v, i)
       this.vertices[index].dom.setAttribute('transform', `translate(${this.vertices[index].x},${this.vertices[index].y})`)
     });
 
     this.setPath(this.vertices)
-    console.log('this.vertices', { x: this.vertices[2].x, y: this.vertices[2].y })
   }
 
   createVertex({ x, y }, index) {

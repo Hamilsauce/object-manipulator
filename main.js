@@ -63,13 +63,13 @@ setTimeout(() => {
   const hud = application.components.canvas.layers.hud
   const scene = application.components.canvas.layers.scene
 
-  console.log('hud.dom',hud.dom );
+  // console.log('hud.dom', hud.dom);
 
   hud.dom.addEventListener('click', e => {
     e.preventDefault()
     e.stopPropagation()
     e.stopImmediatePropagation()
-    
+
     const vb = scene.dom.viewBox.baseVal
     const zoomIn = e.target.closest('#hud-zoomIn')
     const zoomOut = e.target.closest('#hud-zoomOut')
@@ -77,7 +77,7 @@ setTimeout(() => {
     const isZoomOut = e.composedPath().some(el => el === hud.zoomOut)
 
     // if (isZoomIn && Math.abs(zoom.level) < zoom.limit) {
-    if (zoomIn){
+    if (zoomIn) {
       // zoom.direction++
 
       Object.assign(vb, {
@@ -89,7 +89,7 @@ setTimeout(() => {
     }
 
     // else if (isZoomOut && Math.abs(zoom.level) < zoom.limit) {
-    else if (zoomOut){
+    else if (zoomOut) {
       // zoom.direction--
 
       Object.assign(vb, {

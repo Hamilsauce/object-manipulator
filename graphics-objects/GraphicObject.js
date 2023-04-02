@@ -94,7 +94,7 @@ export class GraphicObject {
   }
 
   get self() { return this.#self };
-  
+
   get type() { return this.#type };
 
   get context() { return this.#context };
@@ -213,6 +213,7 @@ export class GraphicObject {
     const obj = typeof nameOrDOM === 'string' ?
       this.context.templates.querySelector(`[data-template="${nameOrDOM}"]`).cloneNode(true) :
       nameOrDOM;
+
 
     if (!obj) throw new Error('Failed to find/load a component class template. Class/template name: ' + nameOrDOM);
 

@@ -208,6 +208,7 @@ a {
   fill: #FEFEFE;
   stroke: #000000;
   filter: drop-shadow(0 0.003rem 0.005rem #37393D65);
+  pointer-events: none;
 }
 
 .canvas-object * {

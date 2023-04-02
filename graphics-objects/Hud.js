@@ -1,6 +1,10 @@
 import { ViewportLayer } from './ViewportLayer.js';
 import { ObjectRegistry } from './ObjectRegistry.js';
 import { initDetailPane } from './DetailPane.js';
+import { setClipboard } from '../lib/copy-to-clipboard.js';
+
+const { forkJoin, Observable, iif, BehaviorSubject, AsyncSubject, Subject, interval, of, fromEvent, merge, empty, delay, from } = rxjs;
+const { flatMap, reduce, groupBy, toArray, mergeMap, switchMap, scan, map, tap, filter } = rxjs.operators;
 
 const CanvasOptions = {
   type: 'viewport',
@@ -71,6 +75,22 @@ export class Hud extends ViewportLayer {
 
     this.updateDetailPane = this.#updateDetailPane.bind(this)
 
+    this.focusedObject = null;
+
+    // setTimeout(() => {
+    //   console.log(' ', );
+    //   console.log('this.context.layers', this.context.layers)
+    //   this.focusedObject$ = this.context.layers.scene.focusedObject$
+
+
+    //   this.focusedObject$
+    //     .pipe(
+    //       tap(x => console.log('FOCUSED OBJECT IN HUD', x)),
+    //       tap(x => this.focusedObject = x),
+    //     )
+    //     .subscribe()
+    // }, 1000)
+
 
     this.widgets.toolbox.addEventListener('click', e => {
       // e.preventDefault()
@@ -89,12 +109,17 @@ export class Hud extends ViewportLayer {
         this.widgets.toolbox.dataset.expanded = !expanded;
       }
     });
+
+    this.widgets.panTool.addEventListener('click', e => {
+      setClipboard(document.querySelector('#scene').innerHTML)
+    });
   }
 
   get widgets() {
     return {
       toolbox: this.querySelector('#toolbox'),
       detailPane: this.detailPane,
+      panTool: this.querySelector('#pan-tool-icon')
     }
   }
 
@@ -109,7 +134,7 @@ export class Hud extends ViewportLayer {
 
   #updateDetailPane(focusedObject) {
     focusedObject = focusedObject ? focusedObject : NULL_DETAIL_PANE;
-    
+
     this.widgets.detailPane.name.textContent = focusedObject.type + '-' + focusedObject.id.slice(0, 3)
     this.widgets.detailPane.selected.textContent = focusedObject.selected;
     this.widgets.detailPane.focused.textContent = focusedObject.focused;
