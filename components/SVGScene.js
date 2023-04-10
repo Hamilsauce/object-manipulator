@@ -1,6 +1,7 @@
 import { Viewport } from './Viewport.js';
 import { ObjectRegistry } from '../graphics-objects/ObjectRegistry.js';
 import { addPanAction } from '../lib/pan-viewport.js';
+// import { GraphicObject } from '../graphics-objects/GraphicObject.js';
 
 
 const { forkJoin, Observable, iif, BehaviorSubject, AsyncSubject, Subject, interval, of, fromEvent, merge, empty, delay, from } = rxjs;
@@ -32,6 +33,8 @@ export class Scene extends Viewport {
 
   constructor(context, options) {
     super(context, 'scene', options);
+
+// GraphicObject.prototype.context = this
 
     this.pan$ = addPanAction(this, e => {
       this.pan(e);
@@ -89,8 +92,10 @@ export class Scene extends Viewport {
       tap(this.objectEvents$),
     ).subscribe()
 
-    fromEvent(this.dom, 'objectevent').pipe(
+    fromEvent(this.layers.objects, 'objectevent').pipe(
       map(({ detail }) => detail),
+      tap(x => console.log('x', x)),
+      filter(({ type }) => type === 'click'),
       map((e) => {
         const { object, objectId, target } = e
         return {
@@ -99,10 +104,6 @@ export class Scene extends Viewport {
       }),
       tap(this.objectEvents$),
     ).subscribe()
-
-
-
-
 
     this.#sceneState$.pipe(
       tap(x => console.warn('[ SCENE STATE$ CHANGED ]: ', x)),

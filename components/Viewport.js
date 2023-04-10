@@ -93,7 +93,7 @@ export class Viewport extends Component {
         width: this.#viewBox + (width * ratio),
         height: this.#viewBox + (height * ratio)
       }
-      
+
       this.#viewBox
     }
     if (zoomIn) {

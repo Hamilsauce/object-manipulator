@@ -58,7 +58,6 @@ const application = new Application();
 
 
 // ZOOM
-
 setTimeout(() => {
   const hud = application.components.canvas.layers.hud
   const scene = application.components.canvas.layers.scene

@@ -27,6 +27,7 @@ export class SceneObject extends GraphicObject {
 
   constructor(context, type, options = SceneObjectOptions) {
     super(context, type, options);
+  
     this.#state$ = new BehaviorSubject(
     {
       ...(this.bounds || {}),

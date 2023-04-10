@@ -37,6 +37,7 @@ export class GraphicObject {
   constructor(context, type, { point, dimensions, id } = GraphicObjectOptions) {
     if (!type) throw new Error('No type passed to constructor for ', this.constructor.name);
 
+    
     this.#context = context;
 
     this.#self = GraphicObject.getTemplate(context, type);
@@ -227,51 +228,19 @@ export class GraphicObject {
     this.dataset.selected = state ? state : !this.selected;
   }
 
-  // focus(state) {
-  //   this.dataset.focused = state ? state : !this.focused;
-  //   this.dataset.selected = this.dataset.focused === 'true' ? true : this.dataset.focused;
-
-  //   if (this.focused) {
-  //     this.self.parentElement.append(this.self)
-
-  //     this.drag$ = addDragAction.bind(this)(this, e => {
-  //       if (e.type == 'pointerdown') {
-  //         this.panOrigin = { x: e.x, y: e.y }
-  //       }
-
-  //       this.translate({
-  //         x: this.x + (e.x - this.panOrigin.x),
-  //         y: this.y + (e.y - this.panOrigin.y),
-  //       });
-  //     });
-
-  //     this.dragSubscription = this.drag$
-  //       .pipe(
-  //         tap(() => ''),
-  //         tap(x => console.log('TAP', x))
-  //       )
-  //     .subscribe()
-  //   }
-
-  //   else {
-  //     if (this.dragSubscription && this.dragSubscription.unsubscribe) {
-  //       this.dragSubscription.unsubscribe()
-  //     }
-  //   }
-  // }
-
   stopDrag() {}
 
   setStyle(styleObject = {}) {
     Object.assign(this.body.style, styleObject)
   }
 
-  createSVGTransform() { return this.#context.createSVGTransform() }
+
+  createSVGTransform() { return this.context.createSVGTransform() }
 
   removeDOM(selector) {
     const result = this.querySelector(selector);
 
-    result.remove();
+    if (result) result.remove();
   }
 
   getAttribute(key) {
