@@ -19,7 +19,7 @@ export class TriangleObject extends GeometryObject {
     if (!svgContext || !options) throw new Error('Invalid Context or Template passed to TriangleObject');
 
     super(svgContext, 'triangle', triangleVertices, options);
-    console.log('triangle', this);
+    // console.log('triangle', this);
 
     this.vertices.forEach(({ dom }, i) => {
       dom.setAttribute('cx', 0);

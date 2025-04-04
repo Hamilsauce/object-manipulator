@@ -47,7 +47,7 @@ export class GeometryObject extends SceneObject {
             filter(({ target }) => target.classList.contains('vertex')),
             map(({ target, clientX, clientY }) => {
               const p = domPoint(this.dom, clientX, clientY)
-              console.log('POINT:v', p.x, p.y)
+              // console.log('POINT:v', p.x, p.y)
               return {
                 dom: target,
                 index: +target.dataset.index,
@@ -81,7 +81,7 @@ export class GeometryObject extends SceneObject {
   updatePath() {}
 
   setPath(vertices, pointsToPathFn) {
-    console.log('vertices', vertices)
+    // console.log('vertices', vertices)
     const pathData = pointsToPathFn ?
       pointsToPathFn(this) :
       vertices.reduce((acc, { x, y }) => `${acc} ${x},${y}`, 'M ') + 'Z';
