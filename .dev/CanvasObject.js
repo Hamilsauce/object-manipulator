@@ -41,14 +41,14 @@ export class CanvasObject extends EventEmitter {
     // this.attrs = attrs;
 
     // this.#canvas = context;
-    console.log('Canvas Object this.#context', this.#context)
+    // console.log('Canvas Object this.#context', this.#context)
     // this.#self = this.#context.assembleTemplate('shape', type);
 
     // console.log('this.#self', this.#self)
     // Object.assign(this, attrs)
 
     this.self.id = this.objectId;
-    console.log('point', point)
+    // console.log('point', point)
     this.transformList = new TransformList(this,
     {
       transforms: [

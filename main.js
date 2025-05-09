@@ -3,7 +3,6 @@ import { Application } from './components/Application.js';
 
 const { utils } = ham;
 
-const getPlaceholder = (el, name) => el.querySelector(`[data-component-placeholder="${name}"]`)
 
 const createObjectTemplate = (context, type) => {
   const container = this.templates.querySelector('.object-container').cloneNode(true);
@@ -17,6 +16,10 @@ const createObjectTemplate = (context, type) => {
 
   return container;
 }
+
+
+const getPlaceholder = (el, name) => el.querySelector(`[data-component-placeholder="${name}"]`)
+
 
 const getSVGTemplate = (context, type, options) => {
   const template = context

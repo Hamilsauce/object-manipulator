@@ -222,6 +222,13 @@ a {
   filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
   pointer-events: none;
 }
+.select-box {
+  fill: transparent;
+  stroke: #23F950;
+  stroke-width: 0.015rem;
+  filter: drop-shadow(0 0.07rem 0.0025rem #535559B3);
+  pointer-events: none;
+}
 
 #scene .object-container[data-selected=false][data-focused=false] {
   filter: drop-shadow(0 0 0 #FFFFFF00);

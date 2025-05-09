@@ -61,6 +61,7 @@ export class Scene extends Viewport {
       scan((prev, curr) => {
         return { ...prev, ...curr }
       }, this.#sceneState$.getValue()),
+      tap(x => console.log('objectEvents$')),
       tap(this.#sceneState$),
     );
 
@@ -94,7 +95,7 @@ export class Scene extends Viewport {
 
     fromEvent(this.layers.objects, 'objectevent').pipe(
       map(({ detail }) => detail),
-      tap(x => console.log('x', x)),
+      tap(x => console.log('this.layers.objects > objectevent')),
       filter(({ type }) => type === 'click'),
       map((e) => {
         const { object, objectId, target } = e
@@ -106,7 +107,7 @@ export class Scene extends Viewport {
     ).subscribe()
 
     this.#sceneState$.pipe(
-      tap(x => console.warn('[ SCENE STATE$ CHANGED ]: ', x)),
+      tap(x => console.warn('[ SCENE STATE$ CHANGED ]: ')),
     ).subscribe()
 
     window._scene = this;
