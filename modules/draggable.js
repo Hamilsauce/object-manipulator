@@ -71,6 +71,8 @@ export const draggable = (parent, element) => {
 
   // Convert pointer position from screen space to coordinates of el
   function inElementSpace(evt) {
+    // const pt = svg.createSVGPoint();
+
     pt.x = evt.clientX;
     pt.y = evt.clientY;
     return pt.matrixTransform(svg.getScreenCTM().inverse());

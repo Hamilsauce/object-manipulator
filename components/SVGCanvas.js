@@ -56,7 +56,7 @@ export class SVGCanvas extends Viewport {
       tap((e) => {
         const { object, objectId, target, action } = e.detail
         const targetObject = this.domObjectMap.get(target);
-
+console.warn('action', action)
         this.layers.scene.insertObject(action)
       }),
     );
