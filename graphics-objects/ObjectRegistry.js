@@ -12,6 +12,7 @@ const ObjectMap = new Map([
   ['rect', RectObject],
   ['triangle', TriangleObject],
   ['hud', Hud],
+  // ['detailPane', DetailPane],
 ]);
 
 export const ObjectRegistry = {

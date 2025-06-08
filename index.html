@@ -189,16 +189,7 @@
           
           <g data-template="hud" class="canvas-component">
             
-            <g id="detail-pane" class="canvas-object" data-object-type="content" transform="translate(312,4) scale(1)">
-              
-              <!-- <g id="origin-coords" class="hud-widget" transform="translate(0,0)" data-expanded="false">
-                <rect id="coords-surface" transform="translate(0,0)" ry="4" rx="4" x="0" y="0" width="96" height="24" _fill="#FFFFFF99" _stroke="#00000080" />
-              
-                <g id="origin-coords-content" transform="translate(28,16)" data-expanded="false" style="font-size:0.8rem;f_pont-weight:600;">
-                  <text class="coord-text" id="origin-coord-x" text-anchor="middle">x: </text>
-                  <text class="coord-text" id="origin-coord-y" x="40" text-anchor="middle">y: </text>
-                </g>
-              </g> -->
+            <g id="detail-pane" class="hud-widget" data-object-type="content" transform="translate(312,4) scale(1)">
               
               <g id="object-detail" class="hud-component" transform="translate(0,0)">
                 <foreignObject width="96" height="188" class="content-object">
@@ -206,7 +197,7 @@
                     <section class="content-row content-top">
                       <div id="object-name" class="content-title">Triangle 1</div>
                     </section>
-                    <section class="content-row content-upper-middle">
+                    <section class="content-row content-middle">
                       <div class="content-field">
                         <div class="field-name">Selected: </div>
                         <div id="selected-value" class="field-value">false</div>
@@ -288,8 +279,6 @@
             </g>
             
             
-            
-            
             <g id="hud-mode-toolbar" class="hud-widget" transform="translate(8,730) rotate(0,0,0) scale(1)" x="0" y="0">
               <rect id="hud-mode-toolbar-face" _class="hud-face" transform="translate(0,0) rotate(0,0,0) scale(1)" x="0" y="0" width="90" height="44" rx="2" fill="transparent" stroke-width="1.5" stroke="#FAA50300" />
               
@@ -337,13 +326,13 @@
       
       <!-- SCENE VIEWPORT -->
       
-      <g id="scene-container" data-component-container="scene" transform="translate(0,0)">
+      <g id="scene-container" data-component-container="scene" transform="translate(0,0) rotate(0) scale(1)">
         <svg data-component-placeholder="scene"></svg>
       </g>
       
       <!-- HUD -->
       
-      <g id="hud-container" data-component-container="hud" transform="translate(0,0)">
+      <g id="hud-container" data-component-container="hud" transform="translate(0,0) rotate(0) scale(1)">
         <g data-component-placeholder="hud"></g>
       </g>
     </svg>

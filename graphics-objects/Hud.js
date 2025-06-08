@@ -63,26 +63,26 @@ const NULL_DETAIL_PANE = {
 export class Hud extends ViewportLayer {
   constructor(context, options) {
     super(context, 'hud', { ...options, id: 'hud' });
-
+    
     this.slotObject('hud');
     this.removeDOM('.overlay-slot');
     // this.removeDOM('.selection-slot');
     const [originElX, originElY] = [...this.querySelectorAll('#origin-coords-content text')];
-
+    
     this.originElX = originElX
     this.originElY = originElY
     this.detailPane = initDetailPane(this)
-
+    
     this.updateDetailPane = this.#updateDetailPane.bind(this)
-
+    
     this.focusedObject = null;
-
+    
     // setTimeout(() => {
     //   console.log(' ', );
     //   console.log('this.context.layers', this.context.layers)
     //   this.focusedObject$ = this.context.layers.scene.focusedObject$
-
-
+    
+    
     //   this.focusedObject$
     //     .pipe(
     //       tap(x => console.log('FOCUSED OBJECT IN HUD', x)),
@@ -90,14 +90,25 @@ export class Hud extends ViewportLayer {
     //     )
     //     .subscribe()
     // }, 1000)
-
-
+    
+    
+    this.widgets.detailPane.addEventListener('click', e => {
+      e.stopPropagation()
+      
+      const targ = e.target.closest('#object-name')
+  
+      if (targ) {
+        const expanded = this.widgets.detailPane.dom.dataset.expanded === 'true' ? true : false
+        this.widgets.detailPane.dom.dataset.expanded = !expanded;
+      }
+    });
+    
     this.widgets.toolbox.addEventListener('click', e => {
       // e.preventDefault()
       e.stopPropagation()
-
+      
       const targ = e.target.closest('g.toolbox-object')
-
+      
       if (targ) {
         const type = targ.dataset.objectType
         if (type) {
@@ -109,12 +120,12 @@ export class Hud extends ViewportLayer {
         this.widgets.toolbox.dataset.expanded = !expanded;
       }
     });
-
+    
     this.widgets.panTool.addEventListener('click', e => {
       setClipboard(document.querySelector('#scene').innerHTML)
     });
   }
-
+  
   get widgets() {
     return {
       toolbox: this.querySelector('#toolbox'),
@@ -122,19 +133,19 @@ export class Hud extends ViewportLayer {
       panTool: this.querySelector('#pan-tool-icon')
     }
   }
-
+  
   emit(label, e) {
     const { x, y } = this.adaptEvent(e);
-
+    
     this.self.dispatchEvent(new CustomEvent('createobject', {
       bubbles: true,
       detail: { action: label, objectId: this.id, object: this, x, y, type: e.type }
     }));
   }
-
+  
   #updateDetailPane(focusedObject) {
     focusedObject = focusedObject ? focusedObject : NULL_DETAIL_PANE;
-
+    
     this.widgets.detailPane.name.textContent = focusedObject.type + '-' + focusedObject.id.slice(0, 3)
     this.widgets.detailPane.selected.textContent = focusedObject.selected;
     this.widgets.detailPane.focused.textContent = focusedObject.focused;
