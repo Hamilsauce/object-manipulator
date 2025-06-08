@@ -188,7 +188,7 @@ a {
 
 #toolbox {
   stroke: #FEFEFE;
-  stroke-width: 0.6px;
+  stroke-width: 0.5px;
   filter: drop-shadow(0 0.0rem 0.8px #3C3D41AB);
   overflow: hidden;
 }
@@ -204,6 +204,10 @@ a {
   rx: 6px;
   filter: drop-shadow(0 0.0rem 0.8px #3C3D41AB);
   transform: translate(0, -44px);
+}
+
+#toolbox[data-expanded=true] #toolbox-icon {
+  display: none;
 }
 
 
