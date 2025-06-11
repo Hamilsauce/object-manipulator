@@ -48,28 +48,36 @@ const CanvasOptions = {
 export class SVGCanvas extends Viewport {
   constructor(context, options) {
     super(context, 'canvas', options);
-    // console.log('SVGCanvas', this);
-
+    
+    setTimeout(() => {
+      // NOTE - Set timeout is Temp fix for timing issue
+      const parentW = +getComputedStyle(this.self.parentElement).width.replace('px','')
+      const parentH = +getComputedStyle(this.self.parentElement).height.replace('px','')
+      console.warn('parentW', parentW)
+      this.dom.setAttribute('width', parentW)
+      this.dom.setAttribute('height', parentH)
+    }, 0)
+    
     this.createObject$ = fromEvent(this.dom, 'createobject').pipe(
       // tap(x => console.warn('SVGCanvas [[[ CREATE OBJECT ]]] EVENTS', x)),
       tap(this.objectEvents$),
       tap((e) => {
         const { object, objectId, target, action } = e.detail
         const targetObject = this.domObjectMap.get(target);
-console.warn('action', action)
+        console.warn('action', action)
         this.layers.scene.insertObject(action)
       }),
     );
-
+    
     this.createObjectSubscription = this.createObject$.subscribe();
-
+    
     this.focusedObjectSubscription = this.layers.scene.focusedObject$
       .pipe(
         tap(this.layers.hud.updateDetailPane),
       )
       .subscribe();
   }
-
+  
   get layers() {
     return {
       scene: this.components.scene,
